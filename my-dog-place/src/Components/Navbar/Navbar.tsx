@@ -6,8 +6,8 @@ const Navbar = () => {
       <div className="navContainer">
         <span className="logo">MyDogPlace</span>
         <div className="navItems">
-          <button className="navButton">Register</button>
-          <button className="navButton">Login</button>
+          <button className="navButton">הצטרפות</button>
+          <button className="navButton">התחברות</button>
         </div>
       </div>
     </div>

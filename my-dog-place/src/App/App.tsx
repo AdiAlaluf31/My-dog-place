@@ -6,10 +6,9 @@ import { HotelsMainPage } from '../Pages/Home/HotelsMainPage'
 
 function App() {
   return (
-
     <BrowserRouter>
       <Routes>
-        <Route path={ROUTES.HOTELS} element={<HotelsMainPage />} />
+        <Route path={ROUTES.HOME_PAGE} element={<HotelsMainPage />} />
         {/* <Route path={ROUTES.HOTEL} element={<HotelPage/>}/> */}
       </Routes>
   </BrowserRouter>

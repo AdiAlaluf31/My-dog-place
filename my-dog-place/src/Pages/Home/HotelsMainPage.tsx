@@ -1,29 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import Featured from "../../components/featured/Featured";
-import FeaturedProperties from "../../components/featuredProperties/FeaturedProperties";
-import Footer from "../../components/footer/Footer";
-import Header from "../../components/header/Header";
-import MailList from "../../components/mailList/MailList";
-import Navbar from "../../components/Navbar/Navbar";
-import PropertyList from "../../components/propertyList/PropertyList";
+import Featured from "../../Components/Featured/Featured";
+import FeaturedProperties from "../../Components/FeaturedProperties/FeaturedProperties";
+import Footer from "../../Components/Footer/Footer";
+import Header from "../../Components/Header/Header";
+import MailList from "../../Components/MailList/MailList";
+import Navbar from "../../Components/Navbar/Navbar";
+import PropertyList from '../../Components/PropertyList/PropertyList';
 const HotelsMainPage = () => {
 
   return (
     <div>
       <Navbar />
-      <Header type={'list'}/>
+      <Header type=''/>
       <div className="homeContainer">
-        <Featured />
+        {/* <Featured/>
         <h1 className="homeTitle">Browse by property type</h1>
-        <PropertyList />
+        <PropertyList/>
         <h1 className="homeTitle">Homes guests love</h1>
-        <FeaturedProperties />
-        <MailList />
-        <Footer />
+        <FeaturedProperties/> */}
+        <MailList/>
+        <Footer/>
       </div>
     </div>
-  );
-
   );
 }
 
