@@ -1,45 +1,40 @@
-import {
-  faBed,
-  faCalendarDays,
-  faCar,
-  faPerson,
-  faPlane,
-  faTaxi,
-  faDog,
-  faCity
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./header.css";
 import { DateRange } from "react-date-range";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from '../../routes';
-
-interface IHeader {
-  type: string;
-}
-const Header = ({ type }: IHeader) => {
-  const [destination, setDestination] = useState<string>("");
-  const [openDate, setOpenDate] = useState<boolean>(false);
-  const [date, setDate] = useState([
+import { SearchContext } from "../../Context/SearchContext";
+import { AuthContext } from "../../Context/AuthContext";
+import {
+  faCalendarDays,
+  faDog,
+  faCity
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+const Header = ({ type }) => {
+  const [destination, setDestination] = useState("");
+  const [openDate, setOpenDate] = useState(false);
+  const [dates, setDates] = useState([
     {
       startDate: new Date(),
       endDate: new Date(),
       key: "selection",
     },
   ]);
-  const [openOptions, setOpenOptions] = useState<boolean>(false);
+  const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
-    dogs: 1,
-
+    adult: 1,
+    children: 0,
+    room: 1,
   });
 
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
-  const handleOption = (name: keyof typeof options, operation: string) => {
+
+  const handleOption = (name, operation) => {
     setOptions((prev) => {
       return {
         ...prev,
@@ -48,8 +43,11 @@ const Header = ({ type }: IHeader) => {
     });
   };
 
+  const { dispatch } = useContext(SearchContext);
+
   const handleSearch = () => {
-    navigate(ROUTES.HOTELS, { state: { destination, date, options } });
+    dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
+    navigate("/hotels", { state: { destination, dates, options } });
   };
 
   return (
@@ -83,16 +81,16 @@ const Header = ({ type }: IHeader) => {
                 <span
                   onClick={() => setOpenDate(!openDate)}
                   className="headerSearchText"
-                >{`${format(date[0].startDate, "MM/dd/yyyy")} עד ${format(
-                  date[0].endDate,
+                >{`${format(dates[0].startDate, "MM/dd/yyyy")} עד ${format(
+                  dates[0].endDate,
                   "MM/dd/yyyy"
                 )}`}</span>
                 {openDate && (
                   <DateRange
                     editableDateInputs={true}
-                    onChange={(item:any) => setDate([item.selection])}
+                    onChange={(item) => setDates([item.selection])}
                     moveRangeOnFirstSelection={false}
-                    ranges={date}
+                    ranges={dates}
                     className="date"
                     minDate={new Date()}
                   />
