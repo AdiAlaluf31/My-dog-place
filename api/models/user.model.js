@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, {Schema} from "mongoose";
 const UserSchema = new mongoose.Schema(
     {
         username: {
@@ -34,6 +34,7 @@ const UserSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        dogs: [{ type: Schema.Types.ObjectId, ref: 'Dog' }],
     },
     { timestamps: true }
 );
