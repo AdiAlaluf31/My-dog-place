@@ -50,6 +50,24 @@ const Header = ({ type }) => {
     navigate("/hotels", { state: { destination, dates, options } });
   };
 
+  const sendRequest = () => {
+    // send request to server at port 8800
+    fetch("http://localhost:8800/api/auth/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username: 'yuv1',
+            password: 'aaaaaa'
+        })
+    }).then(res => {
+      res.json().then(data => {
+        console.log(data);
+        })
+    })
+  }
+
   return (
     <div className="header">
       <div
@@ -65,7 +83,7 @@ const Header = ({ type }) => {
             <p className="headerDesc">
               הצטרף אלינו וקבל הטבות ייחודיות! צבור נקודות וקבל בנחה חד פעמים של 10%
             </p>
-            <button className="headerBtn">הצטרף / התחבר</button>
+            <button className="headerBtn" onClick={sendRequest}>הצטרף / התחבר</button>
             <div className="headerSearch">
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faCity} className="headerIcon" />

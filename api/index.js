@@ -5,8 +5,11 @@ import authRoute from "./routes/auth.js";
 import usersRoute from "./routes/users.js";
 import hotelsRoute from "./routes/hotels.js";
 import roomsRoute from "./routes/rooms.js";
+import gptRoute from "./routes/new-schemas.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+
+const PORT = process.env.PORT || 8800;
 
 const app = express();
 dotenv.config();
@@ -33,6 +36,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
 app.use("/api/hotels", hotelsRoute);
 app.use("/api/rooms", roomsRoute);
+app.use("/gpt", gptRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
@@ -45,7 +49,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(8800, () => {
-  connect();
-  console.log("Connected to backend.");
+app.listen(PORT, async () => {
+  await connect();
+  console.log("Backend is live at port " + PORT);
 });

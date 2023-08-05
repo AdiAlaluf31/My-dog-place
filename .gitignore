@@ -1,0 +1,9 @@
+# IDE stuff
+.idea
+.vscode
+.DS_Store
+
+# Node.js
+node_modules/
+client/node_modules/
+api/node_modules/
