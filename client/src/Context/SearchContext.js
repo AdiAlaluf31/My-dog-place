@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   city: undefined,
   dates: [],
   options: {
-    numOfPets:undefined
+    numOfDogs:undefined
   },
 };
 

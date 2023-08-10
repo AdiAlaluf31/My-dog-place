@@ -25,9 +25,7 @@ const Header = ({ type }) => {
   ]);
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
-    adult: 1,
-    children: 0,
-    room: 1,
+    numOfDogs:1
   });
 
   const navigate = useNavigate();
@@ -65,7 +63,7 @@ const Header = ({ type }) => {
             <p className="headerDesc">
               הצטרף אלינו וקבל הטבות ייחודיות! צבור נקודות וקבל בנחה חד פעמים של 10%
             </p>
-            <button className="headerBtn">הצטרף / התחבר</button>
+            {!user&&<button className="headerBtn">הצטרף / התחבר</button>}
             <div className="headerSearch">
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faCity} className="headerIcon" />
@@ -101,21 +99,21 @@ const Header = ({ type }) => {
                 <span
                   onClick={() => setOpenOptions(!openOptions)}
                   className="headerSearchText"
-                >{`${options.dogs} כלבים`}</span>
+                >{`${options.numOfDogs} כלבים`}</span>
                 {openOptions && (
                   <div className="options">
                     <div className="optionItem">
                       <span className="optionText">Dogs</span>
                       <div className="optionCounter">
                         <button
-                          disabled={options.dogs <= 1}
+                          disabled={options.numOfDogs <= 1}
                           className="optionCounterButton"
                           onClick={() => handleOption("dogs", "d")}
                         >
                           -
                         </button>
                         <span className="optionCounterNumber">
-                          {options.dogs}
+                          {options.numOfDogs}
                         </span>
                         <button
                           className="optionCounterButton"
