@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 
-router.post('/users', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const { name, email } = req.body;
 
@@ -18,3 +18,5 @@ router.post('/users', async (req, res) => {
         res.status(500).json({ error: 'Failed to register user' });
     }
 });
+
+export default router;

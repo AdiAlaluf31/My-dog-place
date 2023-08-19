@@ -6,6 +6,7 @@ import usersRoute from "./routes/users.routes.js";
 import reservationsRoute from "./routes/reservations.routes.js";
 import dogsRoute from "./routes/dogs.routes.js";
 import kennelsRoute from "./routes/kennels.routes.js";
+import newUsersRoute from "./routes/new-schemas.js"
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -37,6 +38,7 @@ app.use("/api/users", usersRoute);
 app.use("/api/reservations", reservationsRoute);
 app.use("/api/dogs", dogsRoute);
 app.use("/api/kennels", kennelsRoute);
+app.use("/api/users2", newUsersRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
