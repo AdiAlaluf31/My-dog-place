@@ -34,11 +34,10 @@ app.use(cookieParser())
 app.use(express.json());
 
 app.use("/api/auth", authRoute);
-app.use("/api/users", usersRoute);
-app.use("/api/reservations", reservationsRoute);
-app.use("/api/dogs", dogsRoute);
 app.use("/api/kennels", kennelsRoute);
-app.use("/api/users2", newUsersRoute);
+app.use("/api/users", usersRoute);
+app.use("/api/dogs", dogsRoute);
+app.use("/api/reservations", reservationsRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;

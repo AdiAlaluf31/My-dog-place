@@ -6,13 +6,14 @@ import {Kennel} from "../models/kennel.model.js";
 const router = express.Router();
 
 /*
- * @path: /api/kennels/:kennelId/dogs
+ * @path: /api/reservations/:kennelId?startDate=2021-01-01&endDate=2021-01-10
  * @method: GET
  * @access: public
  * @description: fetch all dogs in a kennel
  */
 router.get('/:kennelId', async (req, res) => {
     try {
+        // req.params example: { kennelId: '123', startDate: '2021-01-01', endDate: '2021-01-10' }
         const { kennelId } = req.params;
         const { startDate, endDate } = req.query;
 
@@ -30,6 +31,15 @@ router.get('/:kennelId', async (req, res) => {
 
 router.post('/', verifyUser, async (req, res) => {
     try {
+        /*
+            * req.body example:
+            * {
+            *   kennel: '123',
+            *   dog: '456',
+            *   startDate: '2021-01-01',
+            *   endDate: '2021-01-10'
+            * }
+         */
         const { kennel, dog, startDate, endDate } = req.body;
 
         // Check if the kennel exists
