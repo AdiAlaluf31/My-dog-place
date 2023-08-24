@@ -9,15 +9,15 @@ import { verifyAdmin, verifyToken, verifyUser } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
-router.get("/checkauthentication", verifyToken, (req,res,next)=>{
+router.get("/checkauthentication", verifyToken, (req,res,next)=> {
   res.send("hello user, you are logged in")
 })
 
-router.get("/checkuser/:id", verifyUser, (req,res,next)=>{
+router.get("/checkuser", verifyUser, (req,res,next)=> {
   res.send(`hello user with id [${req.user.id}], you are logged in and you can delete your account`)
 })
 
-router.get("/checkadmin/:id", verifyAdmin, (req,res,next)=>{
+router.get("/checkadmin", verifyAdmin, (req, res, next)=> {
   res.send("hello admin, you are logged in and you can delete all accounts")
 })
 
@@ -31,6 +31,6 @@ router.delete("/:id", verifyUser, deleteUser);
 router.get("/:id", verifyUser, getUser);
 
 //GET ALL
-router.get("/", verifyAdmin, getUsers);
+router.get("/", getUsers);
 
 export default router;

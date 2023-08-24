@@ -6,7 +6,6 @@ import usersRoute from "./routes/users.routes.js";
 import reservationsRoute from "./routes/reservations.routes.js";
 import dogsRoute from "./routes/dogs.routes.js";
 import kennelsRoute from "./routes/kennels.routes.js";
-import newUsersRoute from "./routes/new-schemas.js"
 import cookieParser from "cookie-parser";
 import cors from "cors";
 

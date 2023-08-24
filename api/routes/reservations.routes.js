@@ -5,25 +5,28 @@ import {Dog} from "../models/dog.model.js";
 import {Kennel} from "../models/kennel.model.js";
 const router = express.Router();
 
+
+router.get('/', verifyUser, async (req, res) => {
+    try {
+        const reservations = await Reservation.find();
+        res.json(reservations);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to fetch reservations' });
+    }
+});
+
 /*
- * @path: /api/reservations/:kennelId?startDate=2021-01-01&endDate=2021-01-10
+ * @path: /api/reservations/:id
  * @method: GET
  * @access: public
  * @description: fetch all dogs in a kennel
  */
-router.get('/:kennelId', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
-        // req.params example: { kennelId: '123', startDate: '2021-01-01', endDate: '2021-01-10' }
-        const { kennelId } = req.params;
-        const { startDate, endDate } = req.query;
+        const { id } = req.params;
+        const kennelReservations = await Reservation.find({ _id: id });
 
-        const kennelRegistration = await Reservation.find({
-            kennel: kennelId,
-            startDate: { $lte: new Date(endDate) },
-            endDate: { $gte: new Date(startDate) },
-        }).select(['dog', 'startDate', 'endDate']).populate('dog');
-
-        res.json(kennelRegistration);
+        res.json(kennelReservations);
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch dogs in the kennel' });
     }
