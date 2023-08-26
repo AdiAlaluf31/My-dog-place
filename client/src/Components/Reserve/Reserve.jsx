@@ -8,9 +8,9 @@ import { SearchContext } from "../../Context/SearchContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Reserve = ({ setOpen, hotelId }) => {
+const Reserve = ({ setOpen, hotel }) => {
   const [selectedRooms, setSelectedRooms] = useState([]);
-  const { data, loading, error } = useFetch(`/hotels/room/${hotelId}`);
+  const { data, loading, error } = useFetch(`/hotels/${hotel.id}`);
   const { dates } = useContext(SearchContext);
 
   const getDatesInRange = (startDate, endDate) => {
@@ -73,7 +73,10 @@ const Reserve = ({ setOpen, hotelId }) => {
           className="rClose"
           onClick={() => setOpen(false)}
         />
-        <span>Select your rooms:</span>
+        <span>שלום! תודה שבחרת ב${hotel._id}`</span>
+        <div>אנא הכנס פרטים על כלבך אותו אתה מעוניין להכניס לפנסיון בתאריכים אלו</div>
+        <div>בבקשה התייחס לגילו של הכלב, סוגו, איך הוא מסתדר עם כלבים אחרים</div>
+<input></input>
         {data.map((item) => (
           <div className="rItem" key={item._id}>
             <div className="rItemInfo">

@@ -69,7 +69,9 @@ const Header = ({ type }) => {
   }
 
   return (
-    <div className="header">
+    <div className={
+      type === "list" ? "header listMode" : "header"
+    }>
       <div
         className={
           type === "list" ? "headerContainer listMode" : "headerContainer"
@@ -114,12 +116,8 @@ const Header = ({ type }) => {
                   />
                 )}
               </div>
-              <div className="headerSearchItem">
+              {/* <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faDog} className="headerIcon" />
-                <span
-                  onClick={() => setOpenOptions(!openOptions)}
-                  className="headerSearchText"
-                >{`${options.dogs} כלבים`}</span>
                 {openOptions && (
                   <div className="options">
                     <div className="optionItem">
@@ -145,10 +143,10 @@ const Header = ({ type }) => {
                     </div>
                   </div>
                 )}
-              </div>
+              </div> */}
               <div className="headerSearchItem">
                 <button className="headerBtn" onClick={handleSearch}>
-                  Search
+                  חפש
                 </button>
               </div>
             </div>

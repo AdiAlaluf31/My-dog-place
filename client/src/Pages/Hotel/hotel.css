@@ -52,6 +52,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  width: 500px;
+  height: 500px;
 }
 
 .hotelImgWrapper {

@@ -1,9 +1,13 @@
 .header {
-  background-color: #5F9EA0;
+  background-color: #ACDB9F;
   color: white;
   display: flex;
   justify-content: center;
   position: relative;
+}
+
+.header.listMode {
+  background-color: white;
 }
 
 .headerContainer {
@@ -39,7 +43,7 @@
 }
 
 .headerBtn {
-  background-color: #5F9EA0;
+  background-color: #43882F;
   color: white;
   font-weight: 500;
   border: none;

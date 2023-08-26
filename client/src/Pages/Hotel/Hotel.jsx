@@ -24,7 +24,7 @@ const Hotel = () => {
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
-  const { data, loading, error } = useFetch(`/hotels/find/${id}`);
+  const { data, loading, error } = useFetch(`/kennels/${id}`);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -57,11 +57,11 @@ const Hotel = () => {
   };
 
   const handleClick = () => {
-    if (user) {
+    // if (user) {
       setOpenModal(true);
-    } else {
-      navigate("/login");
-    }
+    // } else {
+    //   navigate("/login");
+    // }
   };
   return (
     <div>
@@ -79,7 +79,7 @@ const Hotel = () => {
                 onClick={() => setOpen(false)}
               />
               <FontAwesomeIcon
-                icon={faCircleArrowLeft}
+                icon={faCircleArrowRight}
                 className="arrow"
                 onClick={() => handleMove("l")}
               />
@@ -91,7 +91,7 @@ const Hotel = () => {
                 />
               </div>
               <FontAwesomeIcon
-                icon={faCircleArrowRight}
+                icon={faCircleArrowLeft}
                 className="arrow"
                 onClick={() => handleMove("r")}
               />
@@ -108,7 +108,7 @@ const Hotel = () => {
               Excellent location – {data.distance}m from center
             </span>
             <span className="hotelPriceHighlight">
-              Book a stay over ${data.cheapestPrice} at this property and get a
+              Book a stay over ${data.price} at this property and get a
               free airport taxi
             </span>
             <div className="hotelImages">
@@ -135,18 +135,25 @@ const Hotel = () => {
                   excellent location score of 9.8!
                 </span>
                 <h2>
-                  <b>${days * data.cheapestPrice * options.room}</b> ({days}{" "}
+                  <b>${days * data.price * options.room}</b> ({days}{" "}
                   nights)
                 </h2>
                 <button onClick={handleClick}>Reserve or Book Now!</button>
               </div>
             </div>
+            <div>
+                <h3>
+                  מידע חשוב על הכלבים שיהיו באותו זמן עם כלבך:
+                </h3>
+                <h4>                  צ׳וקה: כלבה מעורבת חמודה בת 7 חודשים, אנרגטית ומסתדרת נהדר עם כלבים אחרים
+</h4>
+              </div>
           </div>
-          <MailList />
-          <Footer />
+          {/* <MailList />
+          <Footer /> */}
         </div>
       )}
-      {openModal && <Reserve setOpen={setOpenModal} hotelId={id}/>}
+      {openModal && <Reserve setOpen={setOpenModal} hotel={data}/>}
     </div>
   );
 };

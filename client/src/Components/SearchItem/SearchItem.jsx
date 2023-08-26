@@ -31,10 +31,10 @@ const SearchItem = (item) => {
           <button>{item.item.rating}</button>
         </div>}
         <div className="siDetailTexts">
-          <span className="siPrice">${item.item.chepestPrice}</span>
-          <span className="siTaxOp">Includes taxes and fees</span>
+          <span className="siPrice">{`${item.item.price} ש״ח ללילה `}</span>
+          <span className="siTaxOp">כולל מע״מ</span>
           <Link to={`/hotels/${item.item._id}`}>
-            <button className="siCheckButton">See availability</button>
+            <button className="siCheckButton">פרטים נוספים</button>
           </Link>
         </div>
       </div>
