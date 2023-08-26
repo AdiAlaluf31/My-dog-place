@@ -22,25 +22,26 @@ router.post('/', verifyAdmin, async (req, res) => {
 // GET www.abc.com/api/kennels
 // response: [{ _id: "123", city: "London", maxCapacity: 10, price: 65, description: "wow!" }, { _id: "456", city: "Paris", maxCapacity: 5, description: "wow2!" }]
 router.get('/', async (req, res) => {
+    const {city, startDate, endDate}=req.query
     try {
-        const kennels = await Kennel.find();
-        res.json(kennels);
+        const kennels = await Kennel.find({city, startDate,endDate});
+        res.status(200).json(kennels);
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch kennels' });
     }
 });
 
-// // get a kennel by id
-// // GET www.abc.com/api/kennels/123
-// // response: { _id: "123", city: "London", maxCapacity: 10, price: 65, description: "wow!" }
-// router.get('/:id', async (req, res) => {
-//     try {
-//         const kennel = await Kennel.findById(req.params.id);
-//         res.json(kennel);
-//     } catch (err) {
-//         res.status(500).json({ error: 'Failed to fetch kennel' });
-//     }
-// });
+// get a kennel by id
+// GET www.abc.com/api/kennels/123
+// response: { _id: "123", city: "London", maxCapacity: 10, price: 65, description: "wow!" }
+router.get('/:id', async (req, res) => {
+    try {
+        const kennel = await Kennel.findById(req.params.id);
+        res.json(kennel);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to fetch kennel' });
+    }
+});
 
 // update a kennel by id
 // PUT www.abc.com/api/kennels/123
@@ -53,7 +54,7 @@ router.put('/:id', verifyAdmin, async (req, res) => {
             { $set: req.body },
             { new: false },
         );
-        res.status(201).json(updatedKennel);
+        res.status(200).json(updatedKennel);
     } catch (err) {
         res.status(500).json({ error: 'Failed to update kennel' });
     }
