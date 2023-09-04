@@ -1,9 +1,14 @@
 .header {
-  background-color: #ACDB9F;
+  background-color: #6D9542;
   color: white;
   display: flex;
   justify-content: center;
   position: relative;
+}
+
+.navButtonsContainer{
+  gap: 10px;
+  display: flex;
 }
 
 .header.listMode {
@@ -46,15 +51,18 @@
   background-color: #43882F;
   color: white;
   font-weight: 500;
-  border: none;
+  border-radius: 15px;
   padding: 10px;
   cursor: pointer;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-color: #A0D73C;
 }
 
 .headerSearch {
   height: 30px;
   background-color: white;
-  border: 3px solid #FFF8DC;
+  border: 3px solid #A0D73C;
   display: flex;
   align-items: center;
   justify-content: space-around;

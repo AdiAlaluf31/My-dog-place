@@ -22,7 +22,7 @@ router.post('/', verifyAdmin, async (req, res) => {
 // GET www.abc.com/api/kennels
 // response: [{ _id: "123", city: "London", maxCapacity: 10, price: 65, description: "wow!" }, { _id: "456", city: "Paris", maxCapacity: 5, description: "wow2!" }]
 router.get('/', async (req, res) => {
-    const {city, startDate, endDate}=req.query
+    const {city, startDate, endDate }= req.query
     try {
         const kennels = await Kennel.find({city, startDate,endDate});
         res.status(200).json(kennels);

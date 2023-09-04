@@ -1,3 +1,24 @@
+.listHeader {
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-family: 'Verdana';
+  color: #76A269;
+  padding-right:450px
+}
+
+.headerBtnList {
+  background-color: #43882F;
+  color: white;
+  font-weight: 500;
+  border-radius: 15px;
+  margin:15px 15px;
+  cursor: pointer;
+  margin-right: 80px;
+  border-color: #A0D73C;
+  padding:10px 30px
+}
+
 .listContainer {
   display: flex;
   justify-content: center;
@@ -68,7 +89,7 @@
   width: 50px;
 }
 
-.listSearch>button{
+/* .listSearch>button{
   padding: 10px;
   background-color: #0071c2;
   color: white;
@@ -76,7 +97,7 @@
   width: 100%;
   font-weight: 500;
   cursor: pointer;
-}
+} */
 
 .listResult {
   flex: 3;

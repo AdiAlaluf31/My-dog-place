@@ -1,8 +1,8 @@
 import "./hotel.css";
 import Navbar from "../../Components/Navbar/Navbar";
 import Header from "../../Components/Header/Header";
-import MailList from "../../Components/MailList/MailList";
-import Footer from "../../Components/Footer/Footer";
+import { format } from "date-fns";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleArrowLeft,
@@ -57,11 +57,7 @@ const Hotel = () => {
   };
 
   const handleClick = () => {
-    // if (user) {
       setOpenModal(true);
-    // } else {
-    //   navigate("/login");
-    // }
   };
   return (
     <div>
@@ -98,20 +94,12 @@ const Hotel = () => {
             </div>
           )}
           <div className="hotelWrapper">
-            <button className="bookNow">Reserve or Book Now!</button>
             <h1 className="hotelTitle">{data.name}</h1>
-            <div className="hotelAddress">
+            {data.address&&<div className="hotelAddress">
               <FontAwesomeIcon icon={faLocationDot} />
               <span>{data.address}</span>
-            </div>
-            <span className="hotelDistance">
-              Excellent location – {data.distance}m from center
-            </span>
-            <span className="hotelPriceHighlight">
-              Book a stay over ${data.price} at this property and get a
-              free airport taxi
-            </span>
-            <div className="hotelImages">
+            </div>}
+            {/* <div className="hotelImages">
               {data.photos?.map((photo, i) => (
                 <div className="hotelImgWrapper" key={i}>
                   <img
@@ -122,23 +110,23 @@ const Hotel = () => {
                   />
                 </div>
               ))}
-            </div>
+            </div> */}
             <div className="hotelDetails">
               <div className="hotelDetailsTexts">
                 <h1 className="hotelTitle">{data.title}</h1>
-                <p className="hotelDesc">{data.desc}</p>
+                <p className="hotelDesc">{data.description}</p>
               </div>
               <div className="hotelDetailsPrice">
-                <h1>Perfect for a {days}-night stay!</h1>
-                <span>
-                  Located in the real heart of Krakow, this property has an
-                  excellent location score of 9.8!
-                </span>
                 <h2>
-                  <b>${days * data.price * options.room}</b> ({days}{" "}
-                  nights)
+                  <b>{days * data.price} ש״ח </b> 
+                  (עבור {days}{" "}
+                  לילות)
                 </h2>
-                <button onClick={handleClick}>Reserve or Book Now!</button>
+                <text style={{fontSize:'12px'}}>{`${format(dates[0].startDate, "dd/MM/yyyy")} עד ${format(
+                  dates[0].endDate,
+                  "dd/MM/yyyy"
+                )}`}</text>
+                <button className="bookNow" onClick={handleClick}>תפוס את מקומך כעת!</button>
               </div>
             </div>
             <div>
@@ -149,8 +137,6 @@ const Hotel = () => {
 </h4>
               </div>
           </div>
-          {/* <MailList />
-          <Footer /> */}
         </div>
       )}
       {openModal && <Reserve setOpen={setOpenModal} hotel={data}/>}

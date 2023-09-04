@@ -13,6 +13,8 @@ import {
   faCity
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import he from "date-fns/locale/he";
+
 const Header = ({ type }) => {
   const [destination, setDestination] = useState("");
   const [openDate, setOpenDate] = useState(false);
@@ -23,51 +25,27 @@ const Header = ({ type }) => {
       key: "selection",
     },
   ]);
-  const [openOptions, setOpenOptions] = useState(false);
-  const [options, setOptions] = useState({
-    adult: 1,
-    children: 0,
-    room: 1,
-  });
-
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+  const {action,user,setAction} =useContext(AuthContext);
 
-
-  const handleOption = (name, operation) => {
-    setOptions((prev) => {
-      return {
-        ...prev,
-        [name]: operation === "i" ? options[name] + 1 : options[name] - 1,
-      };
-    });
-  };
 
   const { dispatch } = useContext(SearchContext);
 
   const handleSearch = () => {
-    dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
-    navigate("/hotels", { state: { destination, dates, options } });
+    dispatch({ type: "NEW_SEARCH", payload: { destination, dates} });
+    navigate("/hotels", { state: { destination, dates} });
   };
 
-  const sendRequest = () => {
-    // send request to server at port 8800
-    fetch("http://localhost:8800/api/auth/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username: 'yuv1',
-            password: 'aaaaaa'
-        })
-    }).then(res => {
-      res.json().then(data => {
-        console.log(data);
-        })
-    })
+  const handleRegisterReq = () => {
+    setAction('register');
+    navigate('/register')
+    
   }
 
+  const handleLoginReq = () => {
+    setAction('logIn');
+    navigate('/register')
+  }
   return (
     <div className={
       type === "list" ? "header listMode" : "header"
@@ -85,13 +63,18 @@ const Header = ({ type }) => {
             <p className="headerDesc">
               הצטרף אלינו וקבל הטבות ייחודיות! צבור נקודות וקבל בנחה חד פעמים של 10%
             </p>
-            <button className="headerBtn" onClick={sendRequest}>הצטרף / התחבר</button>
+            <div className='navButtonsContainer'>
+            <button  className="headerBtn" onClick={handleRegisterReq}>הצטרף</button>
+            <button className="headerBtn" onClick={handleLoginReq}>התחבר</button>
+            </div>
+
             <div className="headerSearch">
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faCity} className="headerIcon" />
                 <input
+                 fontFamily='Verdana'
                   type="text"
-                  placeholder="בחר עיר"
+                  placeholder="בחר אזור"
                   className="headerSearchInput"
                   onChange={(e) => setDestination(e.target.value)}
                 />
@@ -101,12 +84,13 @@ const Header = ({ type }) => {
                 <span
                   onClick={() => setOpenDate(!openDate)}
                   className="headerSearchText"
-                >{`${format(dates[0].startDate, "MM/dd/yyyy")} עד ${format(
+                >{`${format(dates[0].startDate, "dd/MM/yyyy")} עד ${format(
                   dates[0].endDate,
-                  "MM/dd/yyyy"
+                  "dd/MM/yyyy"
                 )}`}</span>
                 {openDate && (
                   <DateRange
+                    locale={he}
                     editableDateInputs={true}
                     onChange={(item) => setDates([item.selection])}
                     moveRangeOnFirstSelection={false}
@@ -116,34 +100,6 @@ const Header = ({ type }) => {
                   />
                 )}
               </div>
-              {/* <div className="headerSearchItem">
-                <FontAwesomeIcon icon={faDog} className="headerIcon" />
-                {openOptions && (
-                  <div className="options">
-                    <div className="optionItem">
-                      <span className="optionText">Dogs</span>
-                      <div className="optionCounter">
-                        <button
-                          disabled={options.dogs <= 1}
-                          className="optionCounterButton"
-                          onClick={() => handleOption("dogs", "d")}
-                        >
-                          -
-                        </button>
-                        <span className="optionCounterNumber">
-                          {options.dogs}
-                        </span>
-                        <button
-                          className="optionCounterButton"
-                          onClick={() => handleOption("dogs", "i")}
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div> */}
               <div className="headerSearchItem">
                 <button className="headerBtn" onClick={handleSearch}>
                   חפש

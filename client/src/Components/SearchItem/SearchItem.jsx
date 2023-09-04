@@ -1,10 +1,19 @@
+
+import { useContext } from "react";
 import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '../../routes';
 import "./searchItem.css";
 import {Link} from "react-router-dom";
+import { SearchContext } from "../../Context/SearchContext";
 
-const SearchItem = (item) => {
+const SearchItem = (props) => {
+  const {item,dates,destination}= props;
   const navigate = useNavigate();
+  const { dispatch } = useContext(SearchContext);
+
+  const handleSearch = () => {
+    dispatch({ type: "NEW_SEARCH", payload: { destination, dates} });
+    navigate(`/hotels/${item?._id}`, { state: { destination, dates} });
+  };
 
   return (
     <div className="searchItem">
@@ -14,28 +23,21 @@ const SearchItem = (item) => {
         className="siImg"
       />
       <div className="siDesc">
-        <h1 className="siTitle">{item.item.name}</h1>
-        <span className="siDistance">{item.item.distance}m from center</span>
-        <span className="siTaxiOp">Free airport taxi</span>
+        <h1 className="siTitle">{item?.item?.name}</h1>
+        {item?.price<100&&<span className="siCancelOp">מחיר שווה במיוחד</span>}
         <span className="siFeatures">
-        {item.item.desc} 
-        </span>
-        <span className="siCancelOp">Free cancellation </span>
-        <span className="siCancelOpSubtitle">
-          You can cancel later, so lock in this great price today!
+        {item?.description} 
         </span>
       </div>
       <div className="siDetails">
-        {item.item.rating && <div className="siRating">
-          <span>Excellent</span>
-          <button>{item.item.rating}</button>
+        {item?.rating>4.5 && <div className="siRating">
+          <span>דירוג גבוה ביותר!</span>
+          <button>{item?.rating}</button>
         </div>}
         <div className="siDetailTexts">
-          <span className="siPrice">{`${item.item.price} ש״ח ללילה `}</span>
+          <span className="siPrice">{`${item?.price} ש״ח ללילה `}</span>
           <span className="siTaxOp">כולל מע״מ</span>
-          <Link to={`/hotels/${item.item._id}`}>
-            <button className="siCheckButton">פרטים נוספים</button>
-          </Link>
+          <button onClick={handleSearch} className="siCheckButton">פרטים נוספים</button>
         </div>
       </div>
     </div>

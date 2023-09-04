@@ -12,12 +12,7 @@ const Navbar = () => {
     <div className="navbar">
       <div className="navContainer">
         <img style={{ height:'80px'}} className='image-icon' src={MyDogPlaceIcon}/>       
-        {user ? user.username : (
-          <div className="navItems">
-            <button className="navButton">Register</button>
-            <button onClick={()=>navigate('/login')} className="navButton">Login</button>
-          </div>
-        )}
+        {user.userName && <text style={{color:'black'}}>{`שלום ${user.userName}!`}</text>}
       </div>
     </div>
   );
