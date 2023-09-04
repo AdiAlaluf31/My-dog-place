@@ -2,7 +2,6 @@
 import { useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import "./searchItem.css";
-import {Link} from "react-router-dom";
 import { SearchContext } from "../../Context/SearchContext";
 
 const SearchItem = (props) => {

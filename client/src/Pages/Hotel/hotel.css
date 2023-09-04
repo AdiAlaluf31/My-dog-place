@@ -79,26 +79,38 @@
 .hotelDesc {
   font-size: 14px;
   margin-top: 20px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+
 }
 
 .hotelDetailsPrice {
   flex: 1;
-  background-color: #C7EC82;
+  background-color: #DAF4A9;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  border-radius: 15px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+
 }
 
 .hotelDetailsPrice > h1 {
   font-size: 18px;
   color: #555;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+
 }
 .hotelDetailsPrice > span {
   font-size: 14px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+
 }
 .hotelDetailsPrice > h2 {
+  color:#008009;
   font-weight: 300;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+
 }
 .hotelDetailsPrice > button {
   background-color: #43882F;
@@ -108,7 +120,26 @@
   padding: 10px 20px;
   cursor: pointer;
   border-color: #A0D73C;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
 
+}
+
+.dogsDescription{
+  margin-top: 80px;
+  flex: 1;
+  background-color: #DAF4A9;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  padding-bottom: 50px;
+
+}
+
+.dogsDescription>h3{
+  color: #008009;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .slider{

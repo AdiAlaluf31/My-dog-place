@@ -9,7 +9,6 @@ import { SearchContext } from "../../Context/SearchContext";
 import { AuthContext } from "../../Context/AuthContext";
 import {
   faCalendarDays,
-  faDog,
   faCity
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,8 +26,6 @@ const Header = ({ type }) => {
   ]);
   const navigate = useNavigate();
   const {action,user,setAction} =useContext(AuthContext);
-
-
   const { dispatch } = useContext(SearchContext);
 
   const handleSearch = () => {
@@ -38,14 +35,14 @@ const Header = ({ type }) => {
 
   const handleRegisterReq = () => {
     setAction('register');
-    navigate('/register')
-    
+    navigate('/register')   
   }
 
   const handleLoginReq = () => {
     setAction('logIn');
     navigate('/register')
   }
+
   return (
     <div className={
       type === "list" ? "header listMode" : "header"
@@ -67,7 +64,6 @@ const Header = ({ type }) => {
             <button  className="headerBtn" onClick={handleRegisterReq}>הצטרף</button>
             <button className="headerBtn" onClick={handleLoginReq}>התחבר</button>
             </div>
-
             <div className="headerSearch">
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faCity} className="headerIcon" />

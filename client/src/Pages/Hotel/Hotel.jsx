@@ -2,7 +2,7 @@ import "./hotel.css";
 import Navbar from "../../Components/Navbar/Navbar";
 import Header from "../../Components/Header/Header";
 import { format } from "date-fns";
-
+import { Oval } from 'react-loader-spinner';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleArrowLeft,
@@ -63,9 +63,19 @@ const Hotel = () => {
     <div>
       <Navbar />
       <Header type="list" />
-      {loading ? (
-        "loading"
-      ) : (
+      {loading ? 
+           <Oval
+            height={80}
+            width={80}
+            color="#4fa94d"
+            wrapperStyle={{paddingRight:'1000px', paddingTop:'300px'}}
+            wrapperClass=""
+            visible={true}
+            ariaLabel='oval-loading'
+            secondaryColor="#4fa94d"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />: (
         <div className="hotelContainer">
           {open && (
             <div className="slider">
@@ -129,13 +139,10 @@ const Hotel = () => {
                 <button className="bookNow" onClick={handleClick}>תפוס את מקומך כעת!</button>
               </div>
             </div>
-            <div>
-                <h3>
-                  מידע חשוב על הכלבים שיהיו באותו זמן עם כלבך:
-                </h3>
-                <h4>                  צ׳וקה: כלבה מעורבת חמודה בת 7 חודשים, אנרגטית ומסתדרת נהדר עם כלבים אחרים
-</h4>
-              </div>
+            <div className="dogsDescription">
+              <h3 >מידע חשוב על הכלבים שיהיו באותו זמן עם כלבך:</h3>
+              <div className='dogDescription'>צ׳וקה: כלבה מעורבת חמודה בת 7 חודשים, אנרגטית ומסתדרת נהדר עם כלבים אחרים</div>
+            </div>
           </div>
         </div>
       )}

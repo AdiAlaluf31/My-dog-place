@@ -34,7 +34,6 @@ const List = () => {
       <div className="listContainer">
         <div className="listWrapper">
           <div className="listSearch">
-            <h1  style={{color:'white'}} className="lsTitle">חפש</h1>
             <div className="lsItem">
               <label style={{color:'white'}}>עיר</label>
               <input placeholder={destination} type="text" onChange={(e)=>setDestination(e.target.value)}/>
@@ -70,7 +69,6 @@ const List = () => {
             secondaryColor="#4fa94d"
             strokeWidth={2}
             strokeWidthSecondary={2}
-          
           /> : (
               <>
                 {data.length ?data.map((item) => (
@@ -80,7 +78,7 @@ const List = () => {
                     <div type='text' style={{color:'#6D9542',paddingRight:'300px', width:'50%',paddingTop:'100px', fontSize:27}}>
                   לצערנו לא מצאנו תוצאות מתאימות עבורך,נסה שנית.
                 </div>
-                <img src={notFoundImg} alt="" style={{width:'400px', paddingRight:'200px', marginTop:'50px'}}/>
+                <img src={notFoundImg} alt="" style={{width:'400px', paddingRight:'260px', marginTop:'50px'}}/>
 
                 </div>
               }
