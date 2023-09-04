@@ -1,12 +1,15 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import authRoute from "./routes/auth.js";
-import usersRoute from "./routes/users.js";
-import hotelsRoute from "./routes/hotels.js";
-import roomsRoute from "./routes/rooms.js";
+import authRoute from "./routes/auth.routes.js";
+import usersRoute from "./routes/users.routes.js";
+import reservationsRoute from "./routes/reservations.routes.js";
+import dogsRoute from "./routes/dogs.routes.js";
+import kennelsRoute from "./routes/kennels.routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+
+const PORT = process.env.PORT || 8800;
 
 const app = express();
 dotenv.config();
@@ -30,9 +33,10 @@ app.use(cookieParser())
 app.use(express.json());
 
 app.use("/api/auth", authRoute);
+app.use("/api/kennels", kennelsRoute);
 app.use("/api/users", usersRoute);
-app.use("/api/hotels", hotelsRoute);
-app.use("/api/rooms", roomsRoute);
+app.use("/api/dogs", dogsRoute);
+app.use("/api/reservations", reservationsRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
@@ -45,7 +49,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(8800, () => {
-  connect();
-  console.log("Connected to backend.");
+app.listen(PORT, async () => {
+  await connect();
+  console.log("Backend is live at port " + PORT);
 });

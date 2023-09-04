@@ -1,13 +1,15 @@
-import User from "../models/User.js";
+import User from "../models/user.model.js";
 
 export const updateUser = async (req,res,next)=>{
   try {
+    const { password, isAdmin, ...rest } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      { $set: req.body },
-      { new: true }
+        req.params.id,
+        { $set: rest },
+        { new: true }
     );
-    res.status(200).json(updatedUser);
+    const { password: _, isAdmin: __, ...data } = updatedUser._doc;
+    res.status(201).json(data);
   } catch (err) {
     next(err);
   }
@@ -15,7 +17,8 @@ export const updateUser = async (req,res,next)=>{
 export const deleteUser = async (req,res,next)=>{
   try {
     await User.findByIdAndDelete(req.params.id);
-    res.status(200).json("User has been deleted.");
+    res.clearCookie("access_token");
+    res.status(204).json("User has been deleted.");
   } catch (err) {
     next(err);
   }
@@ -23,6 +26,7 @@ export const deleteUser = async (req,res,next)=>{
 export const getUser = async (req,res,next)=>{
   try {
     const user = await User.findById(req.params.id);
+    const { password: _, isAdmin: __, ...data } = user._doc;
     res.status(200).json(user);
   } catch (err) {
     next(err);
