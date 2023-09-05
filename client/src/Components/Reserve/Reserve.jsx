@@ -1,14 +1,33 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import "./reserve.css";
+import { format } from "date-fns";
+
 import useFetch from "../../Hooks/useFetch";
 import { useContext, useState } from "react";
 import { SearchContext } from "../../Context/SearchContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthContext";
 
-const Reserve = ({ setOpen, hotel }) => {
+const Reserve = ({ setOpenReservation,setOpenConfirmation, hotel }) => {
+  const { user } = useContext(AuthContext);
+  const { dates } = useContext(SearchContext);
+
   const [error,setError]=useState(false)
+  const [formInfo,setFormInfo]=useState({
+    ownerName:user.username,
+    phoneNum:user.phone,
+    email:user.email,
+    startDate:`${format(
+      dates[0].startDate,
+      "dd/MM/yyyy"
+    )}`,
+    endDate:`${format(dates[0].endDate, "dd/MM/yyyy")}`,
+    dogsAge:'',
+    dogsGander:'',
+    dogsDesc:''
+  })
   // const { dates } = useContext(SearchContext);
   // const getDatesInRange = (startDate, endDate) => {
   //   const start = new Date(startDate);
@@ -53,57 +72,71 @@ const Reserve = ({ setOpen, hotel }) => {
   //     navigate("/");
   //   } catch (err) {}
   // };
+  const handleReservation=()=>{
+    const isFullObj = Object.values(formInfo).every(value => {
+      if (value) {
+        return true;
+      }
+      return false;
+    });
+    setError(!isFullObj);
+    if(isFullObj){
+      setOpenReservation(false)
+      setOpenConfirmation(true)
+    }
+  }
+
   return (
     <div className="reserve">
       <div className="rContainer">
         <FontAwesomeIcon
           icon={faCircleXmark}
           className="rClose"
-          onClick={() => setOpen(false)}
+          onClick={() => setOpenReservation(false)}
         />
         <div className='reserveModalHeader'>מלא את הפרטים הבאים על מנת שנוכל להבטיח את הזמנתך:</div>
         <div className="reserveInputs">
           <div className="reserveInput">
             <input
-              value={''}
+              value={formInfo.ownerName}
               type="text" 
               className="reserveText" 
               placeholder="שם הבעלים "
-              onChange={(e)=>{}}
+              onChange={(e)=>setFormInfo({...formInfo, ownerName:e.target.value})}
               />
           </div>
           <div className="reserveInput">
             <input
-              value={''}
+              value={formInfo.phoneNum}
               type="text" 
               className="reserveText" 
               placeholder="שמספר פלאפון"
-              onChange={(e)=>{}}
+              onChange={(e)=>setFormInfo({...formInfo, phoneNum:e.target.value})}
               />
           </div>
           <div className="reserveInput">
             <input
-              value={''}
+              value={formInfo.email?? user.email}
               type="email" 
               className="reserveText" 
               placeholder='דואר אלקטרוני'
-              onChange={(e)=>{}}
+              onChange={(e)=>setFormInfo({...formInfo, email:e.target.value})}
               />
           </div>     
           <div className="reserveInputDates">
             <input 
-                value={''}
+                value={formInfo.startDate}
                 type="date" 
                 className="reserveText" 
                 placeholder='תאריך התחלה'
-                onChange={(e)=>{}}
+                onChange={(e)=>setFormInfo({...formInfo, startDate:e.target.value})}
               />
               <input 
-                value={''}
+                value={formInfo.endDate}
                 type="date" 
                 className="reserveText" 
                 placeholder='תאריך סיום'
-                onChange={(e)=>{}}
+                onChange={(e)=>setFormInfo({...formInfo, endDate:e.target.value})}
               />
           </div>
         </div>
@@ -113,35 +146,35 @@ const Reserve = ({ setOpen, hotel }) => {
           <div className="reserveInputs">
             <div className="reserveInput">
               <input
-                value={''}
+                value={formInfo.dogsAge}
                 type="email" 
                 className="reserveText" 
                 placeholder="גיל הכלב"
-                onChange={(e)=>{}}
+                onChange={(e)=>setFormInfo({...formInfo, dogsAge:e.target.value})}
               />
             </div>
           <div className="reserveInput">
             <input
-              value={''}
+              value={formInfo.dogsGander}
               type="email" 
               className="reserveText" 
               placeholder="מין הכלב"
-              onChange={(e)=>{}}
+              onChange={(e)=>setFormInfo({...formInfo, dogsGander:e.target.value})}
               />
           </div>
           <div className="reserveInput">
             <input
-              value={''}
+              value={formInfo.dogsDesc}
               type="email" 
-              className="reserveText" 
+              className="reserveTextLong" 
               placeholder="מישע נוסף שיכול לסייע לנו בעת שהותו בפנסיוןב"
-              onChange={(e)=>{}}
+              onChange={(e)=>setFormInfo({...formInfo, dogsDesc:e.target.value})}
               />
           </div>      
           </div>
         </div>
         <div className="submitContainer">
-          <button className="submitReservation" onClick={()=>{}}>אשר הזמנה</button>
+          <button className="submitReservation" onClick={handleReservation}>אשר הזמנה</button>
           {error&&<div className="errorReservation">אנא מלא את כל הפרטים</div>}
         </div>
       </div>

@@ -53,6 +53,15 @@
   border-color: #6D9542;
 }
 
+.reserveTextLong{
+  font-weight: 300;
+  padding:10px;
+  border-radius: 10px;
+  border-color: #6D9542;
+  width: 80%;
+
+}
+
 .submitContainer {
   font-size: 12px;
   display: flex;

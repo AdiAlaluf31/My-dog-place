@@ -16,14 +16,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../Context/SearchContext";
 import { AuthContext } from "../../Context/AuthContext";
 import Reserve from "../../Components/Reserve/Reserve";
+import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
+
 
 const Hotel = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
-
+  const [openReservationModal, setOpenReservationModal] = useState(false);
+  const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
   const { data, loading, error } = useFetch(`/kennels/${id}`);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -57,7 +59,7 @@ const Hotel = () => {
   };
 
   const handleClick = () => {
-      setOpenModal(true);
+      setOpenReservationModal(true);
   };
   return (
     <div>
@@ -110,7 +112,7 @@ const Hotel = () => {
               <span>{data.address}</span>
             </div>}
             {/* <div className="hotelImages">
-              {data.photos?.map((photo, i) => (
+              {data.images?.map((photo, i) => (
                 <div className="hotelImgWrapper" key={i}>
                   <img
                     onClick={() => handleOpen(i)}
@@ -146,7 +148,8 @@ const Hotel = () => {
           </div>
         </div>
       )}
-      {openModal && <Reserve setOpen={setOpenModal} hotel={data}/>}
+      {openReservationModal && <Reserve setOpenReservation={setOpenReservationModal} setOpenConfirmation={setOpenConfirmationModal} hotel={data}/>}
+      {openConfirmationModal&& <ConfirmationModal setOpen={setOpenConfirmationModal} hotel={data}/>}
     </div>
   );
 };

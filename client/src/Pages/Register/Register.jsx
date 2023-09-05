@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import user_icon from '../../assets/images/person.png';
 import email_icon from '../../assets/images/email.png';
 import password_icon from '../../assets/images/password.png';
+import phone from '../../assets/images/phone.png';
+
 
 
 import "./register.css";
@@ -11,7 +13,7 @@ import { AuthContext } from '../../Context/AuthContext';
 
 const Register = () => {
   const {action,user,setUser} =useContext(AuthContext);
-  const[userInfo, setUserInfo]= useState({user:'',email:'',password:''})
+  const[userInfo, setUserInfo]= useState({user:'',email:'',password:'', phone:''})
   const[error,setError]= useState(false)
   const navigate = useNavigate();
 
@@ -48,13 +50,14 @@ const Register = () => {
       body: JSON.stringify({
           username: userInfo.user,
           password: userInfo.password,
+          email: userInfo.email
       })
   }).then(res => {
     res.json().then(data => {
       if(data.status!==200){
         setError(data.message);
       }else{
-        setUser({userName:data.details?.username})
+        setUser({userName:data.details?.username, email:data.details?.email, phone:userInfo.phone})
         setError(false)
         navigate('/')
       }
@@ -78,6 +81,18 @@ const Register = () => {
             onChange={(e)=>{setUserInfo({...userInfo,user:e.target.value});setError(false)}}
             />
         </div>
+        {action==='register'&&
+          <div className="input">
+          <img src={phone} alt="" style={{width:'20px'}}/>
+            <input
+              value={userInfo?.phone}
+              type="phone"
+              className="text"
+              placeholder='פלאפון'
+              onChange={(e) => { setUserInfo({ ...userInfo, phone: e.target.value }); setError(false); } } 
+            />
+          </div>
+        }
         <div className="input">
           <img src={email_icon} alt="" />
           <input

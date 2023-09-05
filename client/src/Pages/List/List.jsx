@@ -27,10 +27,9 @@ const List = () => {
   };
 
   return (
-    <div>
+    <div className='background'>
       <Navbar />
       <Header type="list" />
-      <div className="listHeader">התוצאות המתאימות ביותר עבורך:</div>
       <div className="listContainer">
         <div className="listWrapper">
           <div className="listSearch">

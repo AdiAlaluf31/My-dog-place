@@ -5,7 +5,7 @@ import Navbar from "../../Components/Navbar/Navbar";
 const HotelsMainPage = () => {
 
   return (
-    <div>
+    <div className='rootHome' style={{background:'linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c)'}}>
       <Navbar />
       <Header type=''/>
       <div className="homeContainer">

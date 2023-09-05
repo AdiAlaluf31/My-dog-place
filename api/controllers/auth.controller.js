@@ -12,11 +12,9 @@ export const register = async (req, res, next) => {
       ...req.body,
       password: hash,
     });
-    if (!newUser) return next(createError(400,"משתמש כבר קיים!"));
-
 
     await newUser.save()
-    .then(()=>res.status(200).json({details:"User has been created."}));
+    .then(()=>res.status(200).json({details:"User has been created.", status:200}));
     
   } catch (err) {
     next(err);
@@ -45,7 +43,7 @@ export const login = async (req, res, next) => {
           httpOnly: true,
         })
         .status(200)
-        .json({ details: { ...otherDetails }, isAdmin });
+        .json({ details: { ...otherDetails }, isAdmin, status:200 });
   } catch (err) {
     next(err);
   }
