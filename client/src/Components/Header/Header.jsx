@@ -27,7 +27,7 @@ const Header = ({ type }) => {
   const navigate = useNavigate();
   const {action,user,setAction} =useContext(AuthContext);
   const { dispatch } = useContext(SearchContext);
-
+const cities=['תל אביב','ראשון לציון','באר שבע','ירושלים','חיפה','רמת גן','גבעתיים']
   const handleSearch = () => {
     dispatch({ type: "NEW_SEARCH", payload: { destination, dates} });
     navigate("/hotels", { state: { destination, dates} });
@@ -67,13 +67,23 @@ const Header = ({ type }) => {
             <div className="headerSearch">
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faCity} className="headerIcon" />
-                <input
+                <div className="dropdown">
+                  <button  type="button" className='dropDownBtn'>
+                    {destination||'בחר עיר'}
+                  </button>
+                  <div className="dropdown-content" aria-labelledby="dropdownMenuButton">
+                    {cities.map((city,index)=>{
+                        return <div onClick={(e)=>setDestination(cities[e.currentTarget.id])} className="dropdown-item" id={index}>{city}</div>
+                    })}
+                  </div>
+                </div>
+                {/* <input
                  fontFamily='Verdana'
                   type="text"
                   placeholder="בחר אזור"
                   className="headerSearchInput"
                   onChange={(e) => setDestination(e.target.value)}
-                />
+                /> */}
               </div>
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />

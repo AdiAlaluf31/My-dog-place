@@ -26,7 +26,8 @@ const Reserve = ({ setOpenReservation,setOpenConfirmation, hotel }) => {
     endDate:`${format(dates[0].endDate, "dd/MM/yyyy")}`,
     dogsAge:'',
     dogsGander:'',
-    dogsDesc:''
+    dogsDesc:'',
+    dogsBreed:''
   })
   // const { dates } = useContext(SearchContext);
   // const getDatesInRange = (startDate, endDate) => {
@@ -164,10 +165,19 @@ const Reserve = ({ setOpenReservation,setOpenConfirmation, hotel }) => {
           </div>
           <div className="reserveInput">
             <input
+              value={formInfo.dogsBreed}
+              type="email" 
+              className="reserveText" 
+              placeholder="גזע הכלב"
+              onChange={(e)=>setFormInfo({...formInfo, dogsBreed:e.target.value})}
+              />
+          </div>
+          <div className="reserveInput">
+            <input
               value={formInfo.dogsDesc}
               type="email" 
               className="reserveTextLong" 
-              placeholder="מישע נוסף שיכול לסייע לנו בעת שהותו בפנסיוןב"
+              placeholder="הוסף תיאור לכלבך על מנת שישהה עם הככלבים המתאימים היותר"
               onChange={(e)=>setFormInfo({...formInfo, dogsDesc:e.target.value})}
               />
           </div>      

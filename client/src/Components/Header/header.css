@@ -61,7 +61,8 @@
 }
 
 .headerSearch {
-  height: 30px;
+  height: 60px;
+  max-width:1050px;
   background-color: white;
   border: 3px solid #A0D73C;
   display: flex;
@@ -88,6 +89,7 @@
 .headerSearchInput {
   border: none;
   outline: none;
+  width:200px
 }
 
 .headerSearchText {
@@ -139,8 +141,57 @@
   color: #0071c2;
   cursor: pointer;
   background-color: white;
+  border:none;
+
 }
 
 .optionCounterButton:disabled {
   cursor: not-allowed;
 }
+
+.dropDownBtn {
+  background-color: white;
+  color: lightgray;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-item{
+  margin:10px
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  color: lightgray;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  padding:20px;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 500px 500px;
+  text-decoration: none;
+  margin: 500px;
+}
+
+.dropdown-content a:hover {background-color: #0071c2;}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
