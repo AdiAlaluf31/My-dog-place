@@ -29,12 +29,15 @@ const Register = () => {
       })
   }).then(res => {
     res.json().then(data => {
-      setUser({userName:data.details.username})
-      setError(false)
-      navigate('/')
-      })
+      if(data.status!==200){
+        setError('משתמש כבר קיים!');
       }
-  )}
+      else{
+        handleLoginReq();
+      }
+    })
+  })
+}
 
   const handleLoginReq = () => {
     fetch("http://localhost:8800/api/auth/login", {
@@ -48,9 +51,14 @@ const Register = () => {
       })
   }).then(res => {
     res.json().then(data => {
-      setUser({userName:data.details.username})
-      navigate('/')
-      }).catch((e)=>{setError(e.message); setUser({})})
+      if(data.status!==200){
+        setError(data.message);
+      }else{
+        setUser({userName:data.details?.username})
+        setError(false)
+        navigate('/')
+      }
+    })
   })
   }
   return (
@@ -94,10 +102,7 @@ const Register = () => {
         <div className="submit-container">
           {action==='register'?<button className="submit" onClick={handleRegisterReq}>הצטרף</button>:
           <button className="submit" onClick={handleLoginReq}>הכנס</button>}
-                  {error==="Cannot read properties of undefined (reading 'username')"&&
-        <div className="error">משתמש כבר קיים!</div>}
-                          {error==="Cannot "&&
-        <div className="error">שמשתמש לא קיים!</div>}
+          {error&&<div className="error">{error}</div>}
         </div>
 
       </div>
