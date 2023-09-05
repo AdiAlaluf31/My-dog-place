@@ -55,10 +55,10 @@ const Header = ({ type }) => {
         {type !== "list" && (
           <>
             <h1 className="headerTitle">
-              הצטרף אלינו וקבל הנחה !
+              הצטרף אלינו עוד היום!
             </h1>
             <p className="headerDesc">
-              הצטרף אלינו וקבל הטבות ייחודיות! צבור נקודות וקבל בנחה חד פעמים של 10%
+              הצטרף אלינו וקבל עדכונים על כל המקומות המתאימים לכלבך! בנוסף קבל הטבה חד פעמית של 10% הנחה!
             </p>
             <div className='navButtonsContainer'>
             <button  className="headerBtn" onClick={handleRegisterReq}>הצטרף</button>
