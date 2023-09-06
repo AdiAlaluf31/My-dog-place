@@ -77,7 +77,7 @@ const Register = () => {
             value={userInfo?.user}
             type="text" 
             className="text" 
-            placeholder="שם משתמש "
+            placeholder="שם מלא "
             onChange={(e)=>{setUserInfo({...userInfo,user:e.target.value});setError(false)}}
             />
         </div>

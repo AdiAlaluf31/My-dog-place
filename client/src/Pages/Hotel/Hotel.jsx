@@ -17,7 +17,9 @@ import { SearchContext } from "../../Context/SearchContext";
 import { AuthContext } from "../../Context/AuthContext";
 import Reserve from "../../Components/Reserve/Reserve";
 import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
+import ReviewsModal from "../../Components/ReviewsModal/ReviewsModal";
 
+import dogBackground from "../../assets/images/background2-dog.png"
 
 const Hotel = () => {
   const location = useLocation();
@@ -26,6 +28,8 @@ const Hotel = () => {
   const [open, setOpen] = useState(false);
   const [openReservationModal, setOpenReservationModal] = useState(false);
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
+  const [openAddReviewModal, setOpenAddReviewModal] = useState(false);
+
   const { data, loading, error } = useFetch(`/kennels/${id}`);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -141,15 +145,35 @@ const Hotel = () => {
                 <button className="bookNow" onClick={handleClick}>תפוס את מקומך כעת!</button>
               </div>
             </div>
-            <div className="dogsDescription">
-              <h3 >מידע חשוב על הכלבים שיהיו באותו זמן עם כלבך:</h3>
-              <div className='dogDescription'>צ׳וקה: כלבה מעורבת חמודה בת 7 חודשים, אנרגטית ומסתדרת נהדר עם כלבים אחרים</div>
+            <div className='reviewsContainer'>
+              <div className="starsReview">
+                <div style={{marginBottom:'5px'}}>
+                  <span className="fa fa-star checked"></span>
+                  <span className="fa fa-star checked"></span>
+                  <span className="fa fa-star checked"></span>
+                  <span className="fa fa-star"></span>
+                  <span className="fa fa-star"></span>
+                </div>
+                <button onClick={()=>setOpenAddReviewModal(true)}style={{border:'none', background:'none'}}>הוסף דירוג</button>
+              </div>
+              <text className="scoreReview">4.6</text>
+        
+            </div>
+            <div className="dogsDescription" style={{display:'flex', flexDirection:'row', gap:'80px'}}>
+              <div className="dogsDescContainer" >
+                <h3 >מידע חשוב על הכלבים שיהיו באותו זמן עם כלבך:</h3>
+                <div className='dogDescription'>צ׳וקה: כלבה מעורבת חמודה בת 7 חודשים, אנרגטית ומסתדרת נהדר עם כלבים אחרים</div>
+              </div>
+              <img src={dogBackground} alt="" style={{height:'200px', direction:'inherit'}}/>
             </div>
           </div>
         </div>
+        
       )}
       {openReservationModal && <Reserve setOpenReservation={setOpenReservationModal} setOpenConfirmation={setOpenConfirmationModal} hotel={data}/>}
       {openConfirmationModal&& <ConfirmationModal setOpen={setOpenConfirmationModal} hotel={data}/>}
+      {openAddReviewModal&& <ReviewsModal setOpen={setOpenAddReviewModal} hotel={data}/>}
+      
     </div>
   );
 };

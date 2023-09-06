@@ -16,7 +16,7 @@ const Reserve = ({ setOpenReservation,setOpenConfirmation, hotel }) => {
 
   const [error,setError]=useState(false)
   const [formInfo,setFormInfo]=useState({
-    ownerName:user.username,
+    ownerName:user.userName,
     phoneNum:user.phone,
     email:user.email,
     startDate:`${format(
