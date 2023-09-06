@@ -61,8 +61,8 @@ const cities=['תל אביב','ראשון לציון','באר שבע','ירוש�
               הצטרף אלינו וקבל עדכונים על כל המקומות המתאימים לכלבך! בנוסף קבל הטבה חד פעמית של 10% הנחה!
             </p>
             <div className='navButtonsContainer'>
-            <button  className="headerBtn" onClick={handleRegisterReq}>הצטרף</button>
-            <button className="headerBtn" onClick={handleLoginReq}>התחבר</button>
+            <button  className="headerBtnLogin" onClick={handleRegisterReq}>הצטרף</button>
+            <button className="headerBtnLogin" onClick={handleLoginReq}>התחבר</button>
             </div>
             <div className="headerSearch">
               <div className="headerSearchItem">

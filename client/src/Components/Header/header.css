@@ -49,7 +49,19 @@
 }
 
 .headerBtn {
-  background-color: #43882F;
+  background-color: #eeb06e;
+  color: white;
+  font-weight: 500;
+  border-radius: 15px;
+  padding: 10px;
+  cursor: pointer;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-color: #A0D73C;
+}
+
+.headerBtnLogin {
+  background-color: #6D9542;
   color: white;
   font-weight: 500;
   border-radius: 15px;

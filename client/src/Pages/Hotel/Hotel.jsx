@@ -18,7 +18,6 @@ import { AuthContext } from "../../Context/AuthContext";
 import Reserve from "../../Components/Reserve/Reserve";
 import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
 import ReviewsModal from "../../Components/ReviewsModal/ReviewsModal";
-
 import dogBackground from "../../assets/images/background2-dog.png"
 
 const Hotel = () => {
@@ -142,7 +141,7 @@ const Hotel = () => {
                   dates[0].endDate,
                   "dd/MM/yyyy"
                 )}`}</text>
-                <button className="bookNow" onClick={handleClick}>תפוס את מקומך כעת!</button>
+                <button className="bookNow" onClick={handleClick}>הזמן כעת!</button>
               </div>
             </div>
             <div className='reviewsContainer'>
@@ -173,7 +172,6 @@ const Hotel = () => {
       {openReservationModal && <Reserve setOpenReservation={setOpenReservationModal} setOpenConfirmation={setOpenConfirmationModal} hotel={data}/>}
       {openConfirmationModal&& <ConfirmationModal setOpen={setOpenConfirmationModal} hotel={data}/>}
       {openAddReviewModal&& <ReviewsModal setOpen={setOpenAddReviewModal} hotel={data}/>}
-      
     </div>
   );
 };

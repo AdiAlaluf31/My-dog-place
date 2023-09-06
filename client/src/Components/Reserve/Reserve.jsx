@@ -19,11 +19,6 @@ const Reserve = ({ setOpenReservation,setOpenConfirmation, hotel }) => {
     ownerName:user.userName,
     phoneNum:user.phone,
     email:user.email,
-    startDate:`${format(
-      dates[0].startDate,
-      "dd/MM/yyyy"
-    )}`,
-    endDate:`${format(dates[0].endDate, "dd/MM/yyyy")}`,
     dogsAge:'',
     dogsGander:'',
     dogsDesc:'',
@@ -124,7 +119,7 @@ const Reserve = ({ setOpenReservation,setOpenConfirmation, hotel }) => {
               onChange={(e)=>setFormInfo({...formInfo, email:e.target.value})}
               />
           </div>     
-          <div className="reserveInputDates">
+          {/* <div className="reserveInputDates">
             <input 
                 value={formInfo.startDate}
                 type="date" 
@@ -139,7 +134,7 @@ const Reserve = ({ setOpenReservation,setOpenConfirmation, hotel }) => {
                 placeholder='תאריך סיום'
                 onChange={(e)=>setFormInfo({...formInfo, endDate:e.target.value})}
               />
-          </div>
+          </div> */}
         </div>
         <div className='divider'></div>
         <div className='reserveDogInputs'>

@@ -6,6 +6,13 @@ import { useState } from "react";
 const ReviewsModal = ({ setOpen, hotel }) => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
+
+  function handleOnScoreSend(){
+    //update in data base
+    setOpen(false)
+
+  }
+
   return (
     <div className="reserve">
       <div className="rContainer">
@@ -32,7 +39,7 @@ const ReviewsModal = ({ setOpen, hotel }) => {
         );
       })}
       </div>
-      <button className='sendReviewBtn'>שלח</button>
+      <button onClick={handleOnScoreSend} className='sendReviewBtn'>שלח</button>
 
         </div>
 
