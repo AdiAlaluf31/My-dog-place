@@ -11,7 +11,7 @@ const Navbar = () => {
     <div className="navbar">
       <div className="navContainer">
         <img style={{ height:'80px'}} className='image-icon' src={MyDogPlaceIcon}/>       
-        {user.userName && <text style={{color:'#43882F', marginTop:'30px', paddingRight:'1000px', fontFamily:"Verdana, Geneva, Tahoma, sans-serif", fontSize:'20px', fontWeight:'bold'}}>{`שלום ${user.userName}!`}</text>}
+        {user?.userName && <text style={{color:'#43882F', marginTop:'30px', paddingRight:'1000px', fontFamily:"Verdana, Geneva, Tahoma, sans-serif", fontSize:'20px', fontWeight:'bold'}}>{`שלום ${user.userName}!`}</text>}
       </div>
     </div>
   );

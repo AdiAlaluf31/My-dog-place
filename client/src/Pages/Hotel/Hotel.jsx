@@ -29,7 +29,7 @@ const Hotel = () => {
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
   const [openAddReviewModal, setOpenAddReviewModal] = useState(false);
 
-  const { data, loading, error } = useFetch(`/kennels/${id}`);
+  const { data, loading, error } = useFetch(`http://localhost:8800/api/kennels/${id}`);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
