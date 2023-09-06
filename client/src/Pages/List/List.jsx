@@ -69,20 +69,19 @@ const List = () => {
             strokeWidth={2}
             strokeWidthSecondary={2}
           /> : (
-              <>
-                {data.length ?data.map((item) => (
-                  <SearchItem item={item} dates={dates} destination={destination}/>
-                )):
-                <div>
-                    <div type='text' style={{color:'#6D9542',paddingRight:'300px', width:'50%',paddingTop:'100px', fontSize:27}}>
-                  לצערנו לא מצאנו תוצאות מתאימות עבורך,נסה שנית.
-                </div>
-                <img src={notFoundImg} alt="" style={{width:'400px', paddingRight:'260px', marginTop:'50px'}}/>
-
-                </div>
-              }
-              </>
-            )}
+                <>
+                  {data.length ?data.map((item) => (
+                    <SearchItem item={item} dates={dates} destination={destination}/>
+                    )):
+                    <div>
+                      <div type='text' style={{color:'#6D9542',paddingRight:'300px', width:'50%',paddingTop:'100px', fontSize:27}}>
+                        לצערנו לא מצאנו תוצאות מתאימות עבורך,נסה שנית.
+                      </div>
+                      <img src={notFoundImg} alt="" style={{width:'400px', paddingRight:'260px', marginTop:'50px'}}/>
+                    </div>
+                  }
+                </>
+              )}
           </div>
         </div>
       </div>

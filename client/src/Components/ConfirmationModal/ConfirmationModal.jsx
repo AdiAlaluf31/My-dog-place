@@ -24,14 +24,10 @@ const ConfirmationModal = ({ setOpen, hotel }) => {
                 dates[0].startDate,
                 "dd/MM/yyyy"
               )} עד ${format(dates[0].endDate, "dd/MM/yyyy")} אושרה.`}</div>
-
             <div style={{marginTop:'20px'}}>נתראה בקרוב!</div>
-          </div>
-
-        <img src={dog_img} style={{width:'200px', marginRight:'50px'}}></img>
-
+          </div> 
+          <img src={dog_img} style={{width:'200px', marginRight:'50px'}}/>
         </div>
-
       </div>
     </div>
   );

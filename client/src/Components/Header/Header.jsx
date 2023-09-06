@@ -15,6 +15,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import he from "date-fns/locale/he";
 
 const Header = ({ type }) => {
+  const navigate = useNavigate();
+  const {setAction} =useContext(AuthContext);
+  const { dispatch } = useContext(SearchContext);
   const [destination, setDestination] = useState("");
   const [openDate, setOpenDate] = useState(false);
   const [dates, setDates] = useState([
@@ -24,10 +27,9 @@ const Header = ({ type }) => {
       key: "selection",
     },
   ]);
-  const navigate = useNavigate();
-  const {action,user,setAction} =useContext(AuthContext);
-  const { dispatch } = useContext(SearchContext);
-const cities=['תל אביב','ראשון לציון','באר שבע','ירושלים','חיפה','רמת גן','גבעתיים']
+
+  const cities=['תל אביב','ראשון לציון','באר שבע','ירושלים','חיפה','רמת גן','גבעתיים'];
+
   const handleSearch = () => {
     dispatch({ type: "NEW_SEARCH", payload: { destination, dates} });
     navigate("/hotels", { state: { destination, dates} });
@@ -77,13 +79,6 @@ const cities=['תל אביב','ראשון לציון','באר שבע','ירוש�
                     })}
                   </div>
                 </div>
-                {/* <input
-                 fontFamily='Verdana'
-                  type="text"
-                  placeholder="בחר אזור"
-                  className="headerSearchInput"
-                  onChange={(e) => setDestination(e.target.value)}
-                /> */}
               </div>
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />

@@ -119,22 +119,6 @@ const Reserve = ({ setOpenReservation,setOpenConfirmation, hotel }) => {
               onChange={(e)=>setFormInfo({...formInfo, email:e.target.value})}
               />
           </div>     
-          {/* <div className="reserveInputDates">
-            <input 
-                value={formInfo.startDate}
-                type="date" 
-                className="reserveText" 
-                placeholder='תאריך התחלה'
-                onChange={(e)=>setFormInfo({...formInfo, startDate:e.target.value})}
-              />
-              <input 
-                value={formInfo.endDate}
-                type="date" 
-                className="reserveText" 
-                placeholder='תאריך סיום'
-                onChange={(e)=>setFormInfo({...formInfo, endDate:e.target.value})}
-              />
-          </div> */}
         </div>
         <div className='divider'></div>
         <div className='reserveDogInputs'>

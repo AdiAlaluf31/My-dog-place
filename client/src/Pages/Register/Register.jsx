@@ -1,13 +1,9 @@
-import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import user_icon from '../../assets/images/person.png';
 import email_icon from '../../assets/images/email.png';
 import password_icon from '../../assets/images/password.png';
 import phone from '../../assets/images/phone.png';
-
-
-
 import "./register.css";
 import { AuthContext } from '../../Context/AuthContext';
 
@@ -119,9 +115,7 @@ const Register = () => {
           <button className="submit" onClick={handleLoginReq}>הכנס</button>}
           {error&&<div className="error">{error}</div>}
         </div>
-
       </div>
-
   );
 };
 

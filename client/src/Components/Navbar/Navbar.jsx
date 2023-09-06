@@ -6,7 +6,6 @@ import MyDogPlaceIcon from '../../assets/images/My-Dog-Place-Logo.png'
 
 const Navbar = () => {
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   return (
     <div className="navbar">
