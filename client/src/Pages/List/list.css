@@ -43,6 +43,8 @@
   position: sticky;
   top: 10px;
   height: max-content;
+  box-shadow: 10px 5px 5px rgb(173, 170, 170);
+
 }
 
 .lsTitle{
