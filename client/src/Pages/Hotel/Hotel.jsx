@@ -37,12 +37,14 @@ const Hotel = () => {
 
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   function dayDifference(date1, date2) {
-    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
-    const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
-    return diffDays;
+    if(date1 &&date2){
+      const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+      const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
+      return diffDays;
+    }
   }
 
-  const days = dayDifference(dates[0].endDate, dates[0].startDate);
+  const days = dayDifference(dates[0]?.endDate, dates[0]?.startDate);
 
   const handleOpen = (i) => {
     setSlideNumber(i);
@@ -96,7 +98,7 @@ const Hotel = () => {
               />
               <div className="sliderWrapper">
                 <img
-                  src={data.photos[slideNumber]}
+                  src={data?.photos?.[slideNumber]}
                   alt=""
                   className="sliderImg"
                 />
@@ -109,10 +111,10 @@ const Hotel = () => {
             </div>
           )}
           <div className="hotelWrapper">
-            <h1 className="hotelTitle">{data.name}</h1>
-            {data.address&&<div className="hotelAddress">
+            <h1 className="hotelTitle">{data?.name}</h1>
+            {data?.address&&<div className="hotelAddress">
               <FontAwesomeIcon icon={faLocationDot} />
-              <span>{data.address}</span>
+              <span>{data?.address}</span>
             </div>}
             {/* <div className="hotelImages">
               {data.images?.map((photo, i) => (
@@ -128,19 +130,18 @@ const Hotel = () => {
             </div> */}
             <div className="hotelDetails">
               <div className="hotelDetailsTexts">
-                <h1 className="hotelTitle">{data.title}</h1>
-                <p className="hotelDesc">{data.description}</p>
+                <h1 className="hotelTitle">{data?.title}</h1>
+                <p className="hotelDesc">{data?.description}</p>
               </div>
               <div className="hotelDetailsPrice">
-                <h2>
-                  <b>{days * data.price} ש״ח </b> 
-                  (עבור {days}{" "}
-                  לילות)
-                </h2>
-                <text style={{fontSize:'12px'}}>{`${format(dates[0].startDate, "dd/MM/yyyy")} עד ${format(
-                  dates[0].endDate,
-                  "dd/MM/yyyy"
-                )}`}</text>
+                {dates.length ?<><h2>
+                    <b>{days * data?.price} ש״ח </b>
+                    (עבור {days}{" "}
+                    לילות)
+                  </h2><text style={{ fontSize: '12px' }}>{`${format(dates?.[0].startDate, "dd/MM/yyyy")} עד ${format(
+                    dates?.[0].endDate,
+                    "dd/MM/yyyy"
+                  )}`}</text></>:<div>{`${data?.price} ש״ח ללילה`}</div>}
                 <button className="bookNow" onClick={handleClick}>הזמן כעת!</button>
               </div>
             </div>
@@ -156,7 +157,6 @@ const Hotel = () => {
                 <button onClick={()=>setOpenAddReviewModal(true)}style={{border:'none', background:'none'}}>הוסף דירוג</button>
               </div>
               <text className="scoreReview">4.6</text>
-        
             </div>
             <div className="dogsDescription" style={{display:'flex', flexDirection:'row', gap:'80px'}}>
               <div className="dogsDescContainer" >

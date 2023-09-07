@@ -26,3 +26,34 @@
   padding-right: 1200px;
   margin-top: 30px;
 }
+
+.actions{
+  display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.navBarText{
+  color: rgb(67, 136, 47);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.emptyOrdersText{
+  color: rgb(67, 136, 47);
+  align-items: center;
+    display: flex;
+    width: 1200px;
+    padding: 200px;
+    padding-right: 500px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.detailshader{
+  display: flex;
+  flex-direction: row;
+  gap: 10px
+}

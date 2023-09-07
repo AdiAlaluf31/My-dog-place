@@ -1,0 +1,51 @@
+.ordersContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-right: 300px;
+  padding-top: 50px;
+  padding-left: 300px;
+}
+
+.ordersTitle{
+  font-size: 30px;
+  font-weight: bold;
+  margin-right: 30px;
+}
+
+.orderContainer{
+    border-radius: 15px;
+    box-shadow: 10px 5px 5px 10px lightgray;
+    padding: 20px;
+    margin: 40px;
+    display: flex;
+    flex-direction: row;
+    gap: 800px;
+}
+
+.orderDetails{
+  display: flex;
+  flex-direction: column;
+  gap:15px
+}
+
+.cancelOrder{
+  background-color: #eeb06e;
+  color: white;
+  font-weight: 500;
+  border-radius: 15px;
+  padding: 5px;
+  cursor: pointer;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-color: #A0D73C;
+  box-shadow: 7px 3px 3px lightgray;
+  width:50%
+}
+
+.kennelName{
+  font-weight: bold;
+}
+.orderDates{
+  font-size: 15px;
+}
