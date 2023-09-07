@@ -11,9 +11,9 @@ const Navbar = () => {
     <div className="navbar">
       <div className="navContainer">
         <img style={{ height:'80px'}} className='image-icon' src={MyDogPlaceIcon} onClick={()=>navigate('/')}/>       
-        {user.userName && 
+        {user?.userName && 
          <div className='actions'>
-          <text  className='navBarText' style={{ paddingRight: '1000px'}}>{`שלום ${user.userName}!`}</text>
+          <text  className='navBarText' style={{ paddingRight: '1000px'}}>{`שלום ${user?.userName}!`}</text>
           <a  className='navBarText' href='/orders'>ההזמנות שלי</a>
           </div>
          }
