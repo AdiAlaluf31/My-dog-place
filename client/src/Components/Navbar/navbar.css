@@ -22,6 +22,14 @@
   color: #003580;
 }
 
+.navButtonsContainer{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  padding-right: 1000px;
+}
+
 .userName{
   padding-right: 1200px;
   margin-top: 30px;
