@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import {Kennel} from "../models/kennel.model.js";
 import {Reservation} from "../models/reservation.model.js";
-import {verifyAdmin} from "../utils/verifyToken.js";
+import {verifyAdmin, verifyUser} from "../utils/verifyToken.js";
 const router = Router();
 
 // write a fetch call for the following endpoint:
@@ -22,10 +22,9 @@ router.post('/', verifyAdmin, async (req, res) => {
 // GET www.abc.com/api/kennels
 // response: [{ _id: "123", city: "London", maxCapacity: 10, price: 65, description: "wow!" }, { _id: "456", city: "Paris", maxCapacity: 5, description: "wow2!" }]
 router.get('/', async (req, res) => {
-    const {city, startDate, endDate }= req.query
     try {
-        const kennels = await Kennel.find({city, startDate,endDate});
-        res.status(200).json(kennels);
+        const kennels = await Kennel.find();
+        res.json(kennels);
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch kennels' });
     }
@@ -106,6 +105,47 @@ router.get('/:kennelId/reservations', async (req, res) => {
         res.json(kennelRegistration);
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch dogs in the kennel' });
+    }
+});
+
+router.post('/:kennelId/reviews', verifyUser,  async (req, res) => {
+    try {
+        const { kennelId } = req.params;
+        const { rating, comment } = req.body;
+
+        const kennel = await Kennel.findById(kennelId);
+
+        if (!kennel) {
+            return res.status(404).json({ error: 'Kennel not found' });
+        }
+
+        const review = {
+            rating,
+            comment,
+            userId: req.user?.id,
+        };
+
+        kennel.reviews.push(review);
+        await kennel.save();
+
+        res.status(201).json({ message: 'Review added' });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to add review' });
+    }
+});
+
+router.get('/:kennelId/reviews', async (req, res) => {
+    try {
+        const { kennelId } = req.params;
+        const kennel = await Kennel.findById(kennelId);
+
+        if (!kennel) {
+            return res.status(404).json({ error: 'Kennel not found' });
+        }
+
+        res.json(kennel.reviews);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to fetch reviews' });
     }
 });
 
