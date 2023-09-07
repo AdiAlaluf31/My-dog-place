@@ -105,7 +105,7 @@
 }
 
 .headerSearchText {
-  color: lightgray;
+  color: black;
   cursor: pointer;
 }
 
@@ -163,7 +163,7 @@
 
 .dropDownBtn {
   background-color: white;
-  color: lightgray;
+  color: black;
   padding: 16px;
   font-size: 16px;
   border: none;
@@ -175,7 +175,8 @@
   display: inline-block;
 }
 .dropdown-item{
-  margin:10px
+  margin:10px;
+  color:black;
 }
 
 .dropdown-content {
