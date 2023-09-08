@@ -5,17 +5,36 @@ import { AuthContext } from "../../Context/AuthContext";
 import MyDogPlaceIcon from '../../assets/images/My-Dog-Place-Logo.png'
 
 const Navbar = () => {
-  const { user } = useContext(AuthContext);
+  const { user, setAction, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const handleRegisterReq = () => {
+    setAction('register');
+    navigate('/register')   
+  }
+
+  const handleLoginReq = () => {
+    setAction('logIn');
+    navigate('/register')
+  }
+  const handleLogOutReq = ()=>{
+    setUser({})
+
+  }
   return (
     <div className="navbar">
       <div className="navContainer">
         <img style={{ height:'80px'}} className='image-icon' src={MyDogPlaceIcon} onClick={()=>navigate('/')}/>       
-        {user.userName && 
+        {user?.userName ? 
          <div className='actions'>
-          <text  className='navBarText' style={{ paddingRight: '1000px'}}>{`שלום ${user.userName}!`}</text>
+          <text  className='navBarText' style={{ paddingRight: '1000px'}}>{`שלום ${user?.userName}!`}</text>
           <a  className='navBarText' href='/orders'>ההזמנות שלי</a>
-          </div>
+          <button  className="headerBtnLogin" onClick={handleLogOutReq}>התנתק</button>
+          </div>:
+              <div className='navButtonsContainer'>
+                  <button  className="headerBtnLogin" onClick={handleRegisterReq}>הצטרף</button>
+                  <button className="headerBtnLogin" onClick={handleLoginReq}>התחבר</button>
+              </div>
          }
       </div>
     </div>

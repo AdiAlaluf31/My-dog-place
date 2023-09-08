@@ -6,10 +6,6 @@
   position: relative;
 }
 
-.navButtonsContainer{
-  gap: 10px;
-  display: flex;
-}
 
 .header.listMode {
   background-color: white;
@@ -70,6 +66,11 @@
   padding-left: 20px;
   padding-right: 20px;
   border-color: #A0D73C;
+  border:solid;
+  border-color: #eeb06e;
+  border-width: 2px;
+  box-shadow: 5px 5px 5px rgb(173, 170, 170);
+  ;
 }
 
 .headerSearch {

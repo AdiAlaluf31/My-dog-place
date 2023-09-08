@@ -17,9 +17,9 @@ const Reserve = ({ setOpenReservation,setOpenConfirmation, kennel }) => {
   const dates =location.state.dates
   const [error,setError]=useState(false)
   const [formInfo,setFormInfo]=useState({
-    ownerName:user.userName,
-    phoneNum:user.phone,
-    email:user.email,
+    ownerName:user?.userName,
+    phoneNum:user?.phone,
+    email:user?.email,
     dogsAge:'',
     dogsGander:'',
     dogsDesc:'',
@@ -97,7 +97,7 @@ const Reserve = ({ setOpenReservation,setOpenConfirmation, kennel }) => {
           </div>
           <div className="reserveInput">
             <input
-              value={formInfo.email?? user.email}
+              value={formInfo.email?? user?.email}
               type="email" 
               className="reserveText" 
               placeholder='דואר אלקטרוני'
