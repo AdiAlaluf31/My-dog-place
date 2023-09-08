@@ -108,7 +108,7 @@ const Hotel = () => {
               />
               <div className="sliderWrapper">
                 <img
-                  src={data?.photos?.[slideNumber]}
+                  src={data?.images?.[slideNumber]}
                   alt=""
                   className="sliderImg"
                 />
@@ -121,26 +121,14 @@ const Hotel = () => {
             </div>
           )}
           <div className="hotelWrapper">
-            <h1 className="hotelTitle">{data?.name}</h1>
-            {data?.address&&<div className="hotelAddress">
+        
+            <div className="hotelDetails">
+              <div className="hotelDetailsTexts">
+              <h1 className="hotelTitle">{data?.name}</h1>
+              {data?.address&&<div className="hotelAddress">
               <FontAwesomeIcon icon={faLocationDot} />
               <span>{data?.address}</span>
             </div>}
-            <div className="hotelImages">
-              {data.images?.map((photo, i) => (
-                <div className="hotelImgWrapper" key={i}>
-                  <img
-                    onClick={() => handleOpen(i)}
-                    src={photo}
-                    alt=""
-                    className="hotelImg"
-                  />
-                </div>
-              ))}
-            </div>
-            <div className="hotelDetails">
-              <div className="hotelDetailsTexts">
-                <h1 className="hotelTitle">{data?.title}</h1>
                 <p className="hotelDesc">{data?.description}</p>
               </div>
               <div className="hotelDetailsPrice">
@@ -155,6 +143,19 @@ const Hotel = () => {
                 <button className="bookNow" onClick={handleClick}>הזמן כעת!</button>
               </div>
             </div>
+            <div className="hotelImages">
+              {data.images?.map((photo, i) => (
+                <div className="hotelImgWrapper" key={i}>
+                  <img
+                    onClick={() => handleOpen(i)}
+                    src={photo}
+                    alt=""
+                    className="hotelImg"
+                  />
+                </div>
+              ))}
+            </div>
+
             <div className='reviewsContainer'>
               <div className="starsReview">
                 <div style={{marginBottom:'5px'}}>
