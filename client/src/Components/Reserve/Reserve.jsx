@@ -9,10 +9,13 @@ import { SearchContext } from "../../Context/SearchContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
+import { DateRange } from "react-date-range";
+import he from "date-fns/locale/he";
 
 const Reserve = ({ setOpenReservation,setOpenConfirmation, hotel }) => {
   const { user } = useContext(AuthContext);
-  const { dates } = useContext(SearchContext);
+  const { dates , setDates} = useContext(SearchContext);
+  const [openDate, setOpenDate] = useState(false);
 
   const [error,setError]=useState(false)
   const [formInfo,setFormInfo]=useState({
@@ -118,7 +121,7 @@ const Reserve = ({ setOpenReservation,setOpenConfirmation, hotel }) => {
               placeholder='דואר אלקטרוני'
               onChange={(e)=>setFormInfo({...formInfo, email:e.target.value})}
               />
-          </div>     
+          </div> 
         </div>
         <div className='divider'></div>
         <div className='reserveDogInputs'>

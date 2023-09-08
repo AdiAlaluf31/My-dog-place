@@ -21,7 +21,7 @@ const List = () => {
   const { data, loading, error, reFetch } = useFetch(
     `/kennels?startDate=${dates[0].startDate}&endDate=${dates[0].endDate}&city=${destination}`
   );
-
+  
   const handleClick = () => {
     reFetch();
   };
@@ -70,7 +70,7 @@ const List = () => {
             strokeWidthSecondary={2}
           /> : (
                 <>
-                  {data.length ?data.map((item) => (
+                  {data?.length ?data.map((item) => (
                     <SearchItem item={item} dates={dates} destination={destination}/>
                     )):
                     <div>

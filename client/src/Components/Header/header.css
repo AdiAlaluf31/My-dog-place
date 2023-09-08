@@ -99,6 +99,10 @@
   gap: 10px;
 }
 
+.rdrCalendarWrapper{
+  display: contents;
+}
+
 .headerSearchInput {
   border: none;
   outline: none;
