@@ -5,7 +5,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import MyDogPlaceIcon from '../../assets/images/My-Dog-Place-Logo.png'
 
 const Navbar = () => {
-  const { user, setAction, setUser } = useContext(AuthContext);
+  const { user, setAction, setUser,setToken } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleRegisterReq = () => {
@@ -19,6 +19,7 @@ const Navbar = () => {
   }
   const handleLogOutReq = ()=>{
     setUser({})
+    setToken('')
 
   }
   return (
