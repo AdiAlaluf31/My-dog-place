@@ -3,12 +3,10 @@ import { createContext, useReducer } from "react";
 const INITIAL_STATE = {
   city: undefined,
   dates: [],
-  options: {
-    numOfPets:undefined
-  },
+  destination:''
 };
 
-export const SearchContext = createContext(INITIAL_STATE);
+export const SearchContext = createContext();
 const SearchReducer = (state, action) => {
   console.log('action',action);
 
@@ -31,6 +29,7 @@ return (
         city: state.destination,
         dates: state.dates,
         options: state.options,
+        destination: state.destination,
         dispatch,
       }}
     >

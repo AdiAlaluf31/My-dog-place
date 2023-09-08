@@ -2,7 +2,7 @@ import "./list.css";
 import Navbar from "../../Components/Navbar/Navbar";
 import Header from "../../Components/Header/Header";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState , useContext } from "react";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../Components/SearchItem/SearchItem";
@@ -10,11 +10,14 @@ import useFetch from "../../Hooks/useFetch";
 import { Oval } from 'react-loader-spinner';
 import notFoundImg from '../../assets/images/notFoundResults.webp';
 import he from "date-fns/locale/he";
+import { SearchContext } from "../../Context/SearchContext";
+
 
 
 const List = () => {
   const location = useLocation();
-  const [destination, setDestination] = useState(location.state.destination);
+  const { dispatch,destination:dest } = useContext(SearchContext);
+  const [destination, setDestination] = useState(location.state.destination||dest);
   const [dates, setDates] = useState(location.state.dates);
   const [openDate, setOpenDate] = useState(false);
 
@@ -23,8 +26,9 @@ const List = () => {
   );
 
   const handleClick = () => {
-    reFetch();
-  };
+    dispatch({ type: "NEW_SEARCH", payload: { destination, dates} });
+  reFetch() 
+   };
 
   return (
     <div className='background'>
@@ -70,7 +74,7 @@ const List = () => {
             strokeWidthSecondary={2}
           /> : (
                 <>
-                  {data.length ?data.map((item) => (
+                  {data?.length ?data.map((item) => (
                     <SearchItem item={item} dates={dates} destination={destination}/>
                     )):
                     <div>

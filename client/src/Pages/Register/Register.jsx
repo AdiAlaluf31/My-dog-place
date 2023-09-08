@@ -8,7 +8,7 @@ import "./register.css";
 import { AuthContext } from '../../Context/AuthContext';
 
 const Register = () => {
-  const {action,user,setUser} =useContext(AuthContext);
+  const {action,user,setUser, setToken} =useContext(AuthContext);
   const[userInfo, setUserInfo]= useState({user:'',email:'',password:'', phone:''})
   const[error,setError]= useState(false)
   const navigate = useNavigate();
@@ -54,6 +54,7 @@ const Register = () => {
         setError(data.message);
       }else{
         setUser({userName:data.details?.username, email:data.details?.email, phone:userInfo.phone})
+        setToken(data.token)
         setError(false)
         navigate('/')
       }

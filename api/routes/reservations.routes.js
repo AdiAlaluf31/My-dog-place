@@ -63,7 +63,7 @@ router.post('/', verifyUser, async (req, res) => {
             return res.status(400).json({ error: 'Kennel is already fully booked for the specified dates' });
         }
 
-        const savedDog = await Dog.create({ ...dog, owner: user.id });
+        const savedDog = await Dog.create({ ...dog});
 
         // Create a new reservation
         const newReservation = await Reservation.create({ dog: savedDog, kennel, startDate, endDate });

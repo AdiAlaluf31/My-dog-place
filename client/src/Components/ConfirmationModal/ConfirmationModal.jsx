@@ -5,9 +5,12 @@ import dog_img from '../../assets/images/background-dog.png'
 import { format } from "date-fns";
 import { useContext } from "react";
 import { SearchContext } from "../../Context/SearchContext";
+import { useLocation } from "react-router-dom";
 
 const ConfirmationModal = ({ setOpen, hotel }) => {
-  const { dates } = useContext(SearchContext);
+  const location = useLocation();
+  const dates=location.state.dates;
+
 
   return (
     <div className="reserve">

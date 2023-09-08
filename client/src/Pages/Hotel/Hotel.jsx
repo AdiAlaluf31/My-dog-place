@@ -10,7 +10,7 @@ import {
   faCircleXmark,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import useFetch from "../../Hooks/useFetch";
 import { useLocation, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../Context/SearchContext";
@@ -33,7 +33,17 @@ const Hotel = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const { dates, options } = useContext(SearchContext);
+  const { dates:finalDates, destination } = useContext(SearchContext);
+  const dates=location.state.dates;
+
+  const { data:dogsData, loading:loadingDogsData, error:errorDogsData, reFetch } = useFetch(
+    `/kennels/${id}/reservations?startDate=${dates?.[0].startDate}&endDate=${dates?.[0].endDate}&city=${destination}`
+  );
+
+  useEffect(()=>
+  {
+    reFetch();
+  },[openConfirmationModal])
 
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   function dayDifference(date1, date2) {
@@ -116,7 +126,7 @@ const Hotel = () => {
               <FontAwesomeIcon icon={faLocationDot} />
               <span>{data?.address}</span>
             </div>}
-            {/* <div className="hotelImages">
+            <div className="hotelImages">
               {data.images?.map((photo, i) => (
                 <div className="hotelImgWrapper" key={i}>
                   <img
@@ -127,7 +137,7 @@ const Hotel = () => {
                   />
                 </div>
               ))}
-            </div> */}
+            </div>
             <div className="hotelDetails">
               <div className="hotelDetailsTexts">
                 <h1 className="hotelTitle">{data?.title}</h1>
@@ -159,17 +169,17 @@ const Hotel = () => {
               <text className="scoreReview">4.6</text>
             </div>
             <div className="dogsDescription" style={{display:'flex', flexDirection:'row', gap:'80px'}}>
-              <div className="dogsDescContainer" >
+      {dogsData?.length?<div className="dogsDescContainer" >
                 <h3 >מידע חשוב על הכלבים שיהיו באותו זמן עם כלבך:</h3>
-                <div className='dogDescription'>צ׳וקה: כלבה מעורבת חמודה בת 7 חודשים, אנרגטית ומסתדרת נהדר עם כלבים אחרים</div>
-              </div>
+                {dogsData.map((dog,index)=><div key={`dog-${index}`} className='dogDescription'>{`${dog.dog.name}: ${dog.dog.description}`}</div>)}
+              </div>:<div className="dogsDescContainer">כלבך יהיה הראשון בתאריכים אלה!</div>}
               <img src={dogBackground} alt="" style={{height:'200px', direction:'inherit'}}/>
             </div>
           </div>
         </div>
         
       )}
-      {openReservationModal && <Reserve setOpenReservation={setOpenReservationModal} setOpenConfirmation={setOpenConfirmationModal} hotel={data}/>}
+      {openReservationModal && <Reserve setOpenReservation={setOpenReservationModal} setOpenConfirmation={setOpenConfirmationModal} kennel={data}/>}
       {openConfirmationModal&& <ConfirmationModal setOpen={setOpenConfirmationModal} hotel={data}/>}
       {openAddReviewModal&& <ReviewsModal setOpen={setOpenAddReviewModal} hotel={data}/>}
     </div>

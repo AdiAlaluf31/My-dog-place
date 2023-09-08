@@ -14,6 +14,10 @@
   position: relative;
 }
 
+.dogDescription{
+  padding-bottom: 5px;
+}
+
 .bookNow {
   background-color: #43882F;
   color: white;
