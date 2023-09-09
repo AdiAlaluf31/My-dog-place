@@ -44,11 +44,14 @@ router.post('/', verifyUser, async (req, res) => {
             return res.status(404).json({ error: 'Kennel not found' });
         }
 
+        const [start, end] = [new Date(startDate), new Date(endDate)];
+        const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+
         // Check if the kennel has enough capacity for the reservation
         const existingReservations = await Reservation.countDocuments({
             kennel,
-            startDate: { $lte: new Date(endDate) },
-            endDate: { $gte: new Date(startDate) },
+            startDate: { $lte: end },
+            endDate: { $gte: start },
         });
 
         if (existingReservations >= kennelExists.maxCapacity) {
@@ -58,7 +61,7 @@ router.post('/', verifyUser, async (req, res) => {
         const savedDog = await Dog.create({ ...dog, owner: user.id });
 
         // Create a new reservation
-        const newReservation = await Reservation.create({ dog: savedDog, kennel, startDate, endDate });
+        const newReservation = await Reservation.create({ dog: savedDog, kennel, startDate, endDate, price: kennelExists.price * days });
         res.status(201).json(newReservation);
     } catch (err) {
         res.status(500).json({ error: 'Failed to make reservation', cause: err });
