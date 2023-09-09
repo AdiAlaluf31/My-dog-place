@@ -8,9 +8,8 @@ const router = express.Router();
 
 router.get('/', verifyUser, async (req, res) => {
     try {
-        const reservations = await Reservation.find().populate('dog');
         const dogs = await Dog.find({ owner: req.user.id });
-        const userReservations = reservations.filter(reservation => dogs.find(dog => dog.id === reservation.dog.id));
+        const userReservations = await Reservation.find({ dog: { $in: dogs } }).populate('dog').populate('kennel');
         res.json(userReservations);
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch reservations', cause: err });
