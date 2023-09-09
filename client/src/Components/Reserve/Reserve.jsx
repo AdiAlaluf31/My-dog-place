@@ -88,10 +88,10 @@ const Reserve = ({ setOpenReservation,setOpenConfirmation, kennel }) => {
           </div>
           <div className="reserveInput">
             <input
-              value={formInfo.phoneNum}
+              value={formInfo.phoneNum?? user.phone}
               type="text" 
               className="reserveText" 
-              placeholder="שמספר פלאפון"
+              placeholder="מספר פלאפון"
               onChange={(e)=>setFormInfo({...formInfo, phoneNum:e.target.value})}
               />
           </div>

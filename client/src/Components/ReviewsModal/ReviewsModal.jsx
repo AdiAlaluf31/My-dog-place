@@ -4,7 +4,7 @@ import "./reviewsModal.css";
 import { useState, useContext } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 
-const ReviewsModal = ({ setOpen, kennel }) => {
+const ReviewsModal = ({ setOpen, kennelId }) => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const { token } = useContext(AuthContext);
@@ -12,7 +12,7 @@ const ReviewsModal = ({ setOpen, kennel }) => {
 
   function handleOnScoreSend(){
     setOpen(false)
-    fetch(`http://localhost:8800/api/kennels/${kennel._id}/reviews`, {
+    fetch(`http://localhost:8800/api/kennels/${kennelId}/reviews`, {
       method: "POST",
       headers: {
           "Content-Type": "application/json",

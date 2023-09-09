@@ -196,20 +196,20 @@
 }
 .reviewsContainer{
   margin-top: 80px;
-  flex: 1;
   background-color: #DAF4A9;
-  padding: 20px;
   display: flex;
-  flex-direction: row;
   border-radius: 15px;
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
-  padding:20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding: 20px;
   box-shadow: 10px 5px 5px rgb(173, 170, 170);
+  align-items: center;
 }
 
 .checked {
   color: orange;
 }
+
+
 
 .fa{
   padding:4px;

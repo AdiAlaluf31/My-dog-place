@@ -17,7 +17,6 @@
     border-radius: 15px;
     box-shadow: 10px 5px 5px 10px lightgray;
     padding: 20px;
-    margin: 40px;
     display: flex;
     flex-direction: row;
     gap: 800px;
@@ -27,6 +26,21 @@
   display: flex;
   flex-direction: column;
   gap:15px
+}
+.reviewOrder{
+  background-color: #eeb06e;
+  color: white;
+  font-weight: 500;
+  border-radius: 15px;
+  padding: 5px;
+  cursor: pointer;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-color: #A0D73C;
+  box-shadow: 7px 3px 3px lightgray;
+  width:50%
+
+
 }
 
 .cancelOrder{

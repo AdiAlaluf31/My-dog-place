@@ -16,7 +16,7 @@ import he from "date-fns/locale/he";
 
 const Header = ({ type }) => {
   const navigate = useNavigate();
-  const {setAction} =useContext(AuthContext);
+  const {setAction,user} =useContext(AuthContext);
   const { dispatch } = useContext(SearchContext);
   const [destination, setDestination] = useState("");
   const [openDate, setOpenDate] = useState(false);
@@ -46,7 +46,7 @@ const Header = ({ type }) => {
         {type !== "list" && (
           <>
             <h1 className="headerTitle">
-              מצא את המקום המתאים ביותר לכלבך!            </h1>
+        {user? `שלום ${user.userName}! !שמחים שחזרת אלינו`:'מצא את המקום המתאים ביותר לכלבך!'} </h1>
             {/* <p className="headerDesc">
               הצטרף אלינו וקבל עדכונים על כל המקומות המתאימים לכלבך! בנוסף קבל הטבה חד פעמית של 10% הנחה!
             </p> */}
