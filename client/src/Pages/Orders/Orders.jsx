@@ -2,13 +2,18 @@ import "./orders.css";
 import Navbar from "../../Components/Navbar/Navbar";
 import Header from "../../Components/Header/Header";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import CancelationModal from '../../Components/CancelModal/CancelModal'
-
+import useFetch from "../../Hooks/useFetch";
+import {AuthContext} from "../../Context/AuthContext"
 const Orders = () => {
   const [openCancelationModal, setOpenCancelationModal] = useState(false);
   const navigate = useNavigate();
-  const userOrders =[{kennelName:'המקום של טלי', startDate:'18/9',endDate:'22/9', price:'250', kennelId:'64e669e06ba978c101591029'}]
+  const { user, setAction, setUser,setToken, token } = useContext(AuthContext);
+
+  const { data:userOrders, loading, error, reFetch } = useFetch(
+    `/reservations`
+  );
 
   return (
     <div className='background'>
@@ -23,13 +28,13 @@ const Orders = () => {
           <div className='orderContainer'>
             <div className='orderDetails'>
               <div className="detailshader">
-                <div className="kennelName">{order.kennelName}</div>
+                <div className="kennelName">{order.kennel.name}</div>
                 <button onClick={()=>navigate(`/hotels/${order.kennelId}`)}>לצפייה בפנסיון</button>
               </div>
               <div className="orderDates">{`${order.startDate} עד ${order.endDate}`}</div>
               <button onClick={()=>setOpenCancelationModal(true)} className="cancelOrder">לביטול הזמנה</button>
             </div>
-            <div className="orderPrice">{`${order.price} ש״ח` }</div>
+            <div className="orderPrice">{`${order.kennel.price} ש״ח` }</div>
           </div>
           ):
           <div className='ordersEmpty'>

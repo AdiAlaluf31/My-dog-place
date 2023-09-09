@@ -172,7 +172,7 @@ const Hotel = () => {
             <div className="dogsDescription" style={{display:'flex', flexDirection:'row', gap:'80px'}}>
       {dogsData?.length?<div className="dogsDescContainer" >
                 <h3 >מידע חשוב על הכלבים שיהיו באותו זמן עם כלבך:</h3>
-                {dogsData.map((dog,index)=><div key={`dog-${index}`} className='dogDescription'>{`${dog.dog.name}: ${dog.dog.description}`}</div>)}
+                {dogsData.map((dog,index)=><div key={`dog-${index}`} className='dogDescription'>{`${dog?.dog?.name}: ${dog?.dog?.description}`}</div>)}
               </div>:<div className="dogsDescContainer">כלבך יהיה הראשון בתאריכים אלה!</div>}
               <img src={dogBackground} alt="" style={{height:'200px', direction:'inherit'}}/>
             </div>
@@ -182,7 +182,7 @@ const Hotel = () => {
       )}
       {openReservationModal && <Reserve setOpenReservation={setOpenReservationModal} setOpenConfirmation={setOpenConfirmationModal} kennel={data}/>}
       {openConfirmationModal&& <ConfirmationModal setOpen={setOpenConfirmationModal} hotel={data}/>}
-      {openAddReviewModal&& <ReviewsModal setOpen={setOpenAddReviewModal} hotel={data}/>}
+      {openAddReviewModal&& <ReviewsModal setOpen={setOpenAddReviewModal} kennel={data}/>}
     </div>
   );
 };

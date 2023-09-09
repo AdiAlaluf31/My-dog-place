@@ -22,7 +22,7 @@ const List = () => {
   const [openDate, setOpenDate] = useState(false);
 
   const { data, loading, error, reFetch } = useFetch(
-    `/kennels?startDate=${dates[0].startDate}&endDate=${dates[0].endDate}&city=${destination}`
+    `/kennels/availability?startDate=${dates[0].startDate}&endDate=${dates[0].endDate}&city=${destination}`
   );
 
   const handleClick = () => {
