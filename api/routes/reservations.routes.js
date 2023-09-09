@@ -61,7 +61,7 @@ router.post('/', verifyUser, async (req, res) => {
         const savedDog = await Dog.create({ ...dog, owner: user.id });
 
         // Create a new reservation
-        const newReservation = await Reservation.create({ dog: savedDog, kennel, startDate, endDate, price: kennelExists.price * days });
+        const newReservation = await Reservation.create({ dog: savedDog, kennel, startDate: start, endDate: end, price: kennelExists.price * days });
         res.status(201).json(newReservation);
     } catch (err) {
         res.status(500).json({ error: 'Failed to make reservation', cause: err });
