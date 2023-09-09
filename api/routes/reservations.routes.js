@@ -8,10 +8,12 @@ const router = express.Router();
 
 router.get('/', verifyUser, async (req, res) => {
     try {
-        const reservations = await Reservation.find();
-        res.json(reservations);
+        const reservations = await Reservation.find().populate('dog');
+        const dogs = await Dog.find({ owner: req.user.id });
+        const userReservations = reservations.filter(reservation => dogs.find(dog => dog.id === reservation.dog.id));
+        res.json(userReservations);
     } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch reservations' });
+        res.status(500).json({ error: 'Failed to fetch reservations', cause: err });
     }
 });
 
@@ -34,15 +36,6 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', verifyUser, async (req, res) => {
     try {
-        /*
-            * req.body example:
-            * {
-            *   kennel: '123',
-            *   dog: '456',
-            *   startDate: '2021-01-01',
-            *   endDate: '2021-01-10'
-            * }
-         */
         const { kennel, dog, startDate, endDate } = req.body;
         const { user } = req;
 
@@ -63,13 +56,13 @@ router.post('/', verifyUser, async (req, res) => {
             return res.status(400).json({ error: 'Kennel is already fully booked for the specified dates' });
         }
 
-        const savedDog = await Dog.create({ ...dog});
+        const savedDog = await Dog.create({ ...dog, owner: user.id });
 
         // Create a new reservation
         const newReservation = await Reservation.create({ dog: savedDog, kennel, startDate, endDate });
         res.status(201).json(newReservation);
     } catch (err) {
-        res.status(500).json({ error: 'Failed to make reservation' });
+        res.status(500).json({ error: 'Failed to make reservation', cause: err });
     }
 });
 

@@ -30,6 +30,31 @@ router.get('/', async (req, res) => {
     }
 });
 
+// www.abc.com/kennels/availability?city=London&startDate=2021-01-01&endDate=2021-01-10
+router.get('/availability', async (req, res) => {
+    try {
+        const { city, startDate, endDate } = req.query;
+        const cityKennels = await Kennel.find({ city });
+        const kennelsReservations = await Reservation.find({
+            kennel: { $in: cityKennels.map((kennel) => kennel._id) },
+            startDate: { $lte: new Date(endDate) },
+            endDate: { $gte: new Date(startDate) },
+        });
+
+        const availableKennels = cityKennels.filter((kennel) => {
+            const reservationsInKennel = kennelsReservations.filter(
+                (reservation) => reservation.kennel.toString() === kennel._id.toString()
+            );
+
+            return reservationsInKennel.length < kennel.maxCapacity;
+        });
+
+        res.status(200).json(availableKennels);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to fetch available kennels' });
+    }
+});
+
 // get a kennel by id
 // GET www.abc.com/api/kennels/123
 // response: { _id: "123", city: "London", maxCapacity: 10, price: 65, description: "wow!" }
@@ -56,31 +81,6 @@ router.put('/:id', verifyAdmin, async (req, res) => {
         res.status(200).json(updatedKennel);
     } catch (err) {
         res.status(500).json({ error: 'Failed to update kennel' });
-    }
-});
-
-// www.abc.com/kennels/availability?city=London&startDate=2021-01-01&endDate=2021-01-10
-router.get('/availability', async (req, res) => {
-    try {
-        const { city, startDate, endDate } = req.query;
-        const cityKennels = await Kennel.find({ city });
-        const kennelsReservations = await Reservation.find({
-            kennel: { $in: cityKennels.map((kennel) => kennel._id) },
-            startDate: { $lte: new Date(endDate) },
-            endDate: { $gte: new Date(startDate) },
-        });
-
-        const availableKennels = cityKennels.filter((kennel) => {
-            const reservationsInKennel = kennelsReservations.filter(
-                (reservation) => reservation.kennel.toString() === kennel._id.toString()
-            );
-
-            return reservationsInKennel.length < kennel.maxCapacity;
-        });
-
-        res.status(200).json(availableKennels);
-    } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch available kennels' });
     }
 });
 
