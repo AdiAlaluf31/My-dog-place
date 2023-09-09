@@ -9,7 +9,7 @@ import { useLocation } from "react-router-dom";
 
 const ConfirmationModal = ({ setOpen, hotel }) => {
   const location = useLocation();
-  const dates=location.state.dates;
+  const dates=location?.state?.dates;
 
 
   return (
@@ -24,9 +24,9 @@ const ConfirmationModal = ({ setOpen, hotel }) => {
           <div className='reserveConfirmationHeader'>
             <div>{`תודה רבה הזמנתך ל ${hotel.name}`}</div>
             <div>{`בתאריכים ${format(
-                dates[0].startDate,
+                dates?.[0].startDate,
                 "dd/MM/yyyy"
-              )} עד ${format(dates[0].endDate, "dd/MM/yyyy")} אושרה.`}</div>
+              )} עד ${format(dates?.[0].endDate, "dd/MM/yyyy")} אושרה.`}</div>
             <div style={{marginTop:'20px'}}>נתראה בקרוב!</div>
           </div> 
           <img src={dog_img} style={{width:'200px', marginRight:'50px'}}/>

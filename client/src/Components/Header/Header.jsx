@@ -34,17 +34,6 @@ const Header = ({ type }) => {
     dispatch({ type: "NEW_SEARCH", payload: { destination, dates} });
     navigate("/hotels", { state: { destination, dates} });
   };
-
-  const handleRegisterReq = () => {
-    setAction('register');
-    navigate('/register')   
-  }
-
-  const handleLoginReq = () => {
-    setAction('logIn');
-    navigate('/register')
-  }
-
   return (
     <div className={
       type === "list" ? "header listMode" : "header"

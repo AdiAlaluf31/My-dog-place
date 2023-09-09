@@ -53,7 +53,7 @@ const Register = () => {
       if(data.status!==200){
         setError(data.message);
       }else{
-        setUser({userName:data.details?.username, email:data.details?.email, phone:userInfo.phone})
+        setUser({userName:data.details?.username, email:data.details?.email, phone:userInfo.phone, id:data.details?._id})
         setToken(data.token)
         setError(false)
         navigate('/')

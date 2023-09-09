@@ -34,7 +34,7 @@ const Hotel = () => {
   const navigate = useNavigate();
 
   const { dates:finalDates, destination } = useContext(SearchContext);
-  const dates=location.state.dates;
+  const dates=location?.state?.dates;
 
   const { data:dogsData, loading:loadingDogsData, error:errorDogsData, reFetch } = useFetch(
     `/kennels/${id}/reservations?startDate=${dates?.[0].startDate}&endDate=${dates?.[0].endDate}&city=${destination}`
@@ -54,7 +54,7 @@ const Hotel = () => {
     }
   }
 
-  const days = dayDifference(dates[0]?.endDate, dates[0]?.startDate);
+  const days = dayDifference(dates?.[0]?.endDate, dates?.[0]?.startDate);
 
   const handleOpen = (i) => {
     setSlideNumber(i);
@@ -132,7 +132,7 @@ const Hotel = () => {
                 <p className="hotelDesc">{data?.description}</p>
               </div>
               <div className="hotelDetailsPrice">
-                {dates.length ?<><h2>
+                {dates?.length ?<><h2>
                     <b>{days * data?.price} ש״ח </b>
                     (עבור {days}{" "}
                     לילות)
@@ -140,7 +140,7 @@ const Hotel = () => {
                     dates?.[0].endDate,
                     "dd/MM/yyyy"
                   )}`}</text></>:<div>{`${data?.price} ש״ח ללילה`}</div>}
-                <button className="bookNow" onClick={handleClick}>הזמן כעת!</button>
+                {dates?.length&&<button className="bookNow" onClick={handleClick}>הזמן כעת!</button>}
               </div>
             </div>
             <div className="hotelImages">
