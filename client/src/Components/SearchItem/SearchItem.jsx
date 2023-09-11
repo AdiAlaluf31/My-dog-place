@@ -17,12 +17,12 @@ const SearchItem = (props) => {
   return (
     <div className="searchItem">
       <img
-        src={"https://cf.bstatic.com/xdata/images/hotel/square600/261707778.webp?k=fa6b6128468ec15e81f7d076b6f2473fa3a80c255582f155cae35f9edbffdd78&o=&s=1"}
+        src={item.images[0]}
         alt=""
         className="siImg"
       />
       <div className="siDesc">
-        <h1 className="siTitle">{item?.item?.name}</h1>
+        <h1 className="siTitle">{item?.name}</h1>
         {item?.price<100&&<span className="siCancelOp">מחיר שווה במיוחד</span>}
         <span className="siFeatures">
         {item?.description} 

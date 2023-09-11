@@ -8,10 +8,11 @@ const router = express.Router();
 
 router.get('/', verifyUser, async (req, res) => {
     try {
-        const reservations = await Reservation.find();
-        res.json(reservations);
+        const dogs = await Dog.find({ owner: req.user.id });
+        const userReservations = await Reservation.find({ dog: { $in: dogs } }).populate('dog').populate('kennel');
+        res.json(userReservations);
     } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch reservations' });
+        res.status(500).json({ error: 'Failed to fetch reservations', cause: err });
     }
 });
 
@@ -34,16 +35,8 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', verifyUser, async (req, res) => {
     try {
-        /*
-            * req.body example:
-            * {
-            *   kennel: '123',
-            *   dog: '456',
-            *   startDate: '2021-01-01',
-            *   endDate: '2021-01-10'
-            * }
-         */
         const { kennel, dog, startDate, endDate } = req.body;
+        const { user } = req;
 
         // Check if the kennel exists
         const kennelExists = await Kennel.findById(kennel);
@@ -51,36 +44,27 @@ router.post('/', verifyUser, async (req, res) => {
             return res.status(404).json({ error: 'Kennel not found' });
         }
 
-        // Check if the dog exists
-        const dogExists = await Dog.find({ _id: dog, owner: req.user.id });
-        if (!dogExists) {
-            return res.status(404).json({ error: 'Dog not found' });
-        }
-
-        // Check if the dog is owned by the user making the reservation (optional)
-        // If you want to enforce that only the owner of the dog can make a reservation for it,
-        // you can add this check. If not needed, you can remove this block.
-        // const userId = req.user; // Assuming you have a middleware to extract the user ID from the request
-        // if (dogExists.owner.toString() !== userId) {
-        //     return res.status(403).json({ error: 'You are not the owner of this dog' });
-        // }
+        const [start, end] = [new Date(startDate), new Date(endDate)];
+        const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
 
         // Check if the kennel has enough capacity for the reservation
         const existingReservations = await Reservation.countDocuments({
             kennel,
-            startDate: { $lte: new Date(endDate) },
-            endDate: { $gte: new Date(startDate) },
+            startDate: { $lte: end },
+            endDate: { $gte: start },
         });
 
         if (existingReservations >= kennelExists.maxCapacity) {
             return res.status(400).json({ error: 'Kennel is already fully booked for the specified dates' });
         }
 
+        const savedDog = await Dog.create({ ...dog, owner: user.id });
+
         // Create a new reservation
-        const newReservation = await Reservation.create({ dog, kennel, startDate, endDate });
+        const newReservation = await Reservation.create({ dog: savedDog, kennel, startDate: start, endDate: end, price: kennelExists.price * days });
         res.status(201).json(newReservation);
     } catch (err) {
-        res.status(500).json({ error: 'Failed to make reservation' });
+        res.status(500).json({ error: 'Failed to make reservation', cause: err });
     }
 });
 
