@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import "./reserve.css";
 import { format } from "date-fns";
+import { useLocation } from "react-router-dom";
 
 import useFetch from "../../Hooks/useFetch";
 import { useContext, useState } from "react";
@@ -12,11 +13,10 @@ import { AuthContext } from "../../Context/AuthContext";
 import { DateRange } from "react-date-range";
 import he from "date-fns/locale/he";
 
-const Reserve = ({ setOpenReservation,setOpenConfirmation, hotel }) => {
-  const { user } = useContext(AuthContext);
-  const { dates , setDates} = useContext(SearchContext);
-  const [openDate, setOpenDate] = useState(false);
-
+const Reserve = ({ setOpenReservation,setOpenConfirmation, kennel }) => {
+  const location = useLocation();
+  const { user, token } = useContext(AuthContext);
+  const dates =location.state.dates
   const [error,setError]=useState(false)
   const [formInfo,setFormInfo]=useState({
     ownerName:user?.userName,
@@ -25,63 +25,47 @@ const Reserve = ({ setOpenReservation,setOpenConfirmation, hotel }) => {
     dogsAge:'',
     dogsGander:'',
     dogsDesc:'',
-    dogsBreed:''
+    dogsBreed:'',
+    dogsName:''
   })
-  // const { dates } = useContext(SearchContext);
-  // const getDatesInRange = (startDate, endDate) => {
-  //   const start = new Date(startDate);
-  //   const end = new Date(endDate);
-  //   const date = new Date(start.getTime());
-  //   const dates = [];
-  //   while (date <= end) {
-  //     dates.push(new Date(date).getTime());
-  //     date.setDate(date.getDate() + 1);
-  //   }
-  //   return dates;
-  // };
-  // const alldates = getDatesInRange(dates[0].startDate, dates[0].endDate);
-  // const isAvailable = (roomNumber) => {
-  //   const isFound = roomNumber.unavailableDates.some((date) =>
-  //     alldates.includes(new Date(date).getTime())
-  //   );
 
-  //   return !isFound;
-  // };
-  // const handleSelect = (e) => {
-  //   const checked = e.target.checked;
-  //   const value = e.target.value;
-  //   setSelectedRooms(
-  //     checked
-  //       ? [...selectedRooms, value]
-  //       : selectedRooms.filter((item) => item !== value)
-  //   );
-  // };
-  // const navigate = useNavigate();
-  // const handleClick = async () => {
-  //   try {
-  //     await Promise.all(
-  //       selectedRooms.map((roomId) => {
-  //         const res = axios.put(`/rooms/availability/${roomId}`, {
-  //           dates: alldates,
-  //         });
-  //         return res.data;
-  //       })
-  //     );
-  //     setOpen(false);
-  //     navigate("/");
-  //   } catch (err) {}
-  // };
-  const handleReservation=()=>{
+  function isFormValid(){
     const isFullObj = Object.values(formInfo).every(value => {
       if (value) {
         return true;
       }
       return false;
     });
-    setError(!isFullObj);
-    if(isFullObj){
-      setOpenReservation(false)
-      setOpenConfirmation(true)
+    return isFullObj;
+
+  }
+  
+  const handleReservation=()=>{
+    const isValidForm= isFormValid();
+    setError(!isValidForm);
+    if(isValidForm){
+        fetch("http://localhost:8800/api/reservations", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+              "authorization": `bearer ${token}`
+          },
+          body: JSON.stringify({
+              kennel,
+              dog: {name:formInfo.dogsName, breed:formInfo.dogsBreed, age:formInfo.dogsAge, isFriendly:true, gender:formInfo.dogsGander, description:formInfo.dogsDesc, user:formInfo.ownerName},
+              startDate:dates[0].startDate,
+              endDate:dates[0].endDate,
+          })
+      }).then(res => {
+        res.json().then(data => {
+          if(data.error){
+            setError(data.message);
+          }else{
+            setOpenReservation(false)
+            setOpenConfirmation(true)
+          }
+        })
+      })
     }
   }
 
@@ -106,10 +90,10 @@ const Reserve = ({ setOpenReservation,setOpenConfirmation, hotel }) => {
           </div>
           <div className="reserveInput">
             <input
-              value={formInfo.phoneNum}
+              value={formInfo.phoneNum?? user.phone}
               type="text" 
               className="reserveText" 
-              placeholder="שמספר פלאפון"
+              placeholder="מספר פלאפון"
               onChange={(e)=>setFormInfo({...formInfo, phoneNum:e.target.value})}
               />
           </div>
@@ -127,6 +111,15 @@ const Reserve = ({ setOpenReservation,setOpenConfirmation, hotel }) => {
         <div className='reserveDogInputs'>
           <div className='reserveModalHeader'>אנא מלא פרטים חיונים על כלבך:</div>
           <div className="reserveInputs">
+          <div className="reserveInput">
+              <input
+                value={formInfo.dogsName}
+                type="email" 
+                className="reserveText" 
+                placeholder="שם הכלב"
+                onChange={(e)=>setFormInfo({...formInfo, dogsName:e.target.value})}
+              />
+            </div>
             <div className="reserveInput">
               <input
                 value={formInfo.dogsAge}

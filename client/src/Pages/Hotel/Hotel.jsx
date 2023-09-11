@@ -10,14 +10,13 @@ import {
   faCircleXmark,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import useFetch from "../../Hooks/useFetch";
 import { useLocation, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../Context/SearchContext";
 import { AuthContext } from "../../Context/AuthContext";
 import Reserve from "../../Components/Reserve/Reserve";
 import ConfirmationModal from "../../Components/ConfirmationModal/ConfirmationModal";
-import ReviewsModal from "../../Components/ReviewsModal/ReviewsModal";
 import dogBackground from "../../assets/images/background2-dog.png"
 
 const Hotel = () => {
@@ -27,13 +26,25 @@ const Hotel = () => {
   const [open, setOpen] = useState(false);
   const [openReservationModal, setOpenReservationModal] = useState(false);
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
-  const [openAddReviewModal, setOpenAddReviewModal] = useState(false);
-
   const { data, loading, error } = useFetch(`/kennels/${id}`);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const { dates, options } = useContext(SearchContext);
+  const { dates:finalDates, destination } = useContext(SearchContext);
+  const dates=location?.state?.dates;
+  const [reviewAvg,setReviewAvg]=useState(0);
+  const { data:dogsData, loading:loadingDogsData, error:errorDogsData, reFetch } = useFetch(
+    `/kennels/${id}/reservations?startDate=${dates?.[0].startDate}&endDate=${dates?.[0].endDate}&city=${destination}`
+  );
+
+  useEffect(()=>
+  {
+    reFetch();
+  },[openConfirmationModal])
+
+  useEffect (()=>{
+    setReviewAvg(getAvgReview())
+  },[data.reviews])
 
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   function dayDifference(date1, date2) {
@@ -44,12 +55,26 @@ const Hotel = () => {
     }
   }
 
-  const days = dayDifference(dates[0]?.endDate, dates[0]?.startDate);
+  const days = dayDifference(dates?.[0]?.endDate, dates?.[0]?.startDate);
 
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
   };
+
+  const getAvgReview=()=>{
+    if(data.reviews){
+      const numOfReviews=data?.reviews?.length;
+      const ratingArray =data?.reviews?.map(review=>review.rating);
+      let results = ratingArray.reduce((a,b)=>{
+       return a+b},0)
+      return (results/numOfReviews).toFixed(1);
+
+    }else{
+      return 'המקום טרם דורג';
+    }
+
+  }
 
   const handleMove = (direction) => {
     let newSlideNumber;
@@ -64,7 +89,13 @@ const Hotel = () => {
   };
 
   const handleClick = () => {
+    if(!Object.keys(user).length){
+      navigate('/register')
+    }else{
       setOpenReservationModal(true);
+
+
+    }
   };
   return (
     <div>
@@ -98,7 +129,7 @@ const Hotel = () => {
               />
               <div className="sliderWrapper">
                 <img
-                  src={data?.photos?.[slideNumber]}
+                  src={data?.images?.[slideNumber]}
                   alt=""
                   className="sliderImg"
                 />
@@ -111,12 +142,29 @@ const Hotel = () => {
             </div>
           )}
           <div className="hotelWrapper">
-            <h1 className="hotelTitle">{data?.name}</h1>
-            {data?.address&&<div className="hotelAddress">
+        
+            <div className="hotelDetails">
+              <div className="hotelDetailsTexts">
+              <h1 className="hotelTitle">{data?.name}</h1>
+              {data?.address&&<div className="hotelAddress">
               <FontAwesomeIcon icon={faLocationDot} />
               <span>{data?.address}</span>
             </div>}
-            {/* <div className="hotelImages">
+                <p className="hotelDesc">{data?.description}</p>
+              </div>
+              <div className="hotelDetailsPrice">
+                {dates?.length ?<><h2>
+                    <b>{days * data?.price} ש״ח </b>
+                    (עבור {days}{" "}
+                    לילות)
+                  </h2><text style={{ fontSize: '12px' }}>{`${format(dates?.[0].startDate, "dd/MM/yyyy")} עד ${format(
+                    dates?.[0].endDate,
+                    "dd/MM/yyyy"
+                  )}`}</text></>:<div>{`${data?.price} ש״ח ללילה`}</div>}
+                {dates?.length&&<button className="bookNow" onClick={handleClick}>הזמן כעת!</button>}
+              </div>
+            </div>
+            <div className="hotelImages">
               {data.images?.map((photo, i) => (
                 <div className="hotelImgWrapper" key={i}>
                   <img
@@ -127,51 +175,33 @@ const Hotel = () => {
                   />
                 </div>
               ))}
-            </div> */}
-            <div className="hotelDetails">
-              <div className="hotelDetailsTexts">
-                <h1 className="hotelTitle">{data?.title}</h1>
-                <p className="hotelDesc">{data?.description}</p>
-              </div>
-              <div className="hotelDetailsPrice">
-                {dates.length ?<><h2>
-                    <b>{days * data?.price} ש״ח </b>
-                    (עבור {days}{" "}
-                    לילות)
-                  </h2><text style={{ fontSize: '12px' }}>{`${format(dates?.[0].startDate, "dd/MM/yyyy")} עד ${format(
-                    dates?.[0].endDate,
-                    "dd/MM/yyyy"
-                  )}`}</text></>:<div>{`${data?.price} ש״ח ללילה`}</div>}
-                <button className="bookNow" onClick={handleClick}>הזמן כעת!</button>
-              </div>
             </div>
+
             <div className='reviewsContainer'>
-              <div className="starsReview">
+              {data?.reviews?.length>0 &&<div className="starsReview">
                 <div style={{marginBottom:'5px'}}>
-                  <span className="fa fa-star checked"></span>
-                  <span className="fa fa-star checked"></span>
-                  <span className="fa fa-star checked"></span>
-                  <span className="fa fa-star"></span>
-                  <span className="fa fa-star"></span>
+                  <span className={reviewAvg>=1?"fa fa-star checked":"fa fa-star"}></span>
+                  <span className={reviewAvg>=2?"fa fa-star checked":"fa fa-star"}></span>
+                  <span className={reviewAvg>=3?"fa fa-star checked":"fa fa-star"}></span>
+                  <span className={reviewAvg>=4?"fa fa-star checked":"fa fa-star"}></span>
+                  <span className={reviewAvg>=5?"fa fa-star checked":"fa fa-star"}></span>
                 </div>
-                <button onClick={()=>setOpenAddReviewModal(true)}style={{border:'none', background:'none'}}>הוסף דירוג</button>
-              </div>
-              <text className="scoreReview">4.6</text>
+              </div>}
+              <text className="scoreReview">{reviewAvg}</text>
             </div>
             <div className="dogsDescription" style={{display:'flex', flexDirection:'row', gap:'80px'}}>
-              <div className="dogsDescContainer" >
+      {dogsData?.length?<div className="dogsDescContainer" >
                 <h3 >מידע חשוב על הכלבים שיהיו באותו זמן עם כלבך:</h3>
-                <div className='dogDescription'>צ׳וקה: כלבה מעורבת חמודה בת 7 חודשים, אנרגטית ומסתדרת נהדר עם כלבים אחרים</div>
-              </div>
+                {dogsData.map((dog,index)=><div key={`dog-${index}`} className='dogDescription'>{`${dog?.dog?.name}: ${dog?.dog?.description}`}</div>)}
+              </div>:<div className="dogsDescContainer">כלבך יהיה הראשון בתאריכים אלה!</div>}
               <img src={dogBackground} alt="" style={{height:'200px', direction:'inherit'}}/>
             </div>
           </div>
         </div>
         
       )}
-      {openReservationModal && <Reserve setOpenReservation={setOpenReservationModal} setOpenConfirmation={setOpenConfirmationModal} hotel={data}/>}
+      {openReservationModal && <Reserve setOpenReservation={setOpenReservationModal} setOpenConfirmation={setOpenConfirmationModal} kennel={data}/>}
       {openConfirmationModal&& <ConfirmationModal setOpen={setOpenConfirmationModal} hotel={data}/>}
-      {openAddReviewModal&& <ReviewsModal setOpen={setOpenAddReviewModal} hotel={data}/>}
     </div>
   );
 };

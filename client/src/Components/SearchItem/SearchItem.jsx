@@ -17,7 +17,7 @@ const SearchItem = (props) => {
   return (
     <div className="searchItem">
       <img
-        src={item?.images}
+        src={item.images[0]}
         alt=""
         className="siImg"
       />

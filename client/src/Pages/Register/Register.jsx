@@ -8,7 +8,7 @@ import "./register.css";
 import { AuthContext } from '../../Context/AuthContext';
 
 const Register = () => {
-  const {action,user,setUser} =useContext(AuthContext);
+  const {action,user,setUser, setToken, setAction} =useContext(AuthContext);
   const[userInfo, setUserInfo]= useState({user:'',email:'',password:'', phone:''})
   const[error,setError]= useState(false)
   const navigate = useNavigate();
@@ -53,7 +53,8 @@ const Register = () => {
       if(data.status!==200){
         setError(data.message);
       }else{
-        setUser({userName:data.details?.username, email:data.details?.email, phone:userInfo.phone})
+        setUser({userName:data.details?.username, email:data.details?.email, phone:userInfo.phone, id:data.details?._id})
+        setToken(data.token)
         setError(false)
         navigate('/')
       }
@@ -114,6 +115,7 @@ const Register = () => {
           {action==='register'?<button className="submit" onClick={handleRegisterReq}>הצטרף</button>:
           <button className="submit" onClick={handleLoginReq}>הכנס</button>}
           {error&&<div className="error">{error}</div>}
+          {action==='register'&&<button className="login" onClick={()=>{setAction('login'); navigate('/register')}}>רשום כבר? התחבר</button>}
         </div>
       </div>
   );

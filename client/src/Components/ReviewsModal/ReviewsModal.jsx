@@ -1,15 +1,33 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import "./reviewsModal.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../../Context/AuthContext";
 
-const ReviewsModal = ({ setOpen, hotel }) => {
+const ReviewsModal = ({ setOpen, kennelId }) => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
+  const { token } = useContext(AuthContext);
+
 
   function handleOnScoreSend(){
-    //update in data base
     setOpen(false)
+    fetch(`http://localhost:8800/api/kennels/${kennelId}/reviews`, {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+          "authorization": `bearer ${token}`
+      },
+      body: JSON.stringify({
+        rating,
+
+      })
+  }).then(res => {
+    res.json().then(data => {
+      console.log(data,'data')
+      
+    })
+  })
 
   }
 

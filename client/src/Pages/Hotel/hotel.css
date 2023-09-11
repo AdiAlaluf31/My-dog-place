@@ -14,6 +14,10 @@
   position: relative;
 }
 
+.dogDescription{
+  padding-bottom: 5px;
+}
+
 .bookNow {
   background-color: #43882F;
   color: white;
@@ -52,7 +56,6 @@
   flex-wrap: wrap;
   justify-content: space-between;
   width: 500px;
-  height: 500px;
 }
 
 .hotelImgWrapper {
@@ -73,7 +76,7 @@
 }
 
 .hotelDetailsTexts {
-  flex: 3;
+  flex: 2;
 }
 
 .hotelDesc {
@@ -147,8 +150,8 @@
   position: sticky;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 50%;
+  height: 30%;
   background-color: rgba(0, 0, 0, 0.613);
   z-index: 999;
   display: flex;
@@ -193,20 +196,20 @@
 }
 .reviewsContainer{
   margin-top: 80px;
-  flex: 1;
   background-color: #DAF4A9;
-  padding: 20px;
   display: flex;
-  flex-direction: row;
   border-radius: 15px;
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
-  padding:20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding: 20px;
   box-shadow: 10px 5px 5px rgb(173, 170, 170);
+  align-items: center;
 }
 
 .checked {
   color: orange;
 }
+
+
 
 .fa{
   padding:4px;
